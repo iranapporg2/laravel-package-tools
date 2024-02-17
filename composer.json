@@ -2,7 +2,6 @@
     "name": "omid-aghakhani/utility",
     "description": "Contains a series of files to help programming, improvement and others",
     "type": "library",
-    "license": "GPL",
     "autoload": {
         "psr-4": {
             "OmidAghakhani\\Utility\\": "src/"
