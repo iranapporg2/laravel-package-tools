@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "src/MainProvider"
+                "OmidAghakhani\\Utility\\MainProvider"
             ]
         }
     }
