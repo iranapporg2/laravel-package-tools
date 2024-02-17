@@ -1,6 +1,6 @@
 <?php
 
-	namespace OmidAghakhani\Utility\src;
+	namespace OmidAghakhani\Utility;
 
 	use Illuminate\Support\ServiceProvider;
 
@@ -9,7 +9,7 @@
 		public function boot() {
 
 			$this->publishes([
-				'utility.php' => config_path('utility.php')
+				'config/utility.php' => config_path('utility.php')
 			]);
 
 		}
