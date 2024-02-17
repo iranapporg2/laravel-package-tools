@@ -2,7 +2,6 @@
     "name": "omid-aghakhani/utility",
     "description": "Contains a series of files to help programming, improvement and others",
     "type": "library",
-	"version":"1.0.0",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -15,7 +14,5 @@
             "email": "157590431+iranapporg2@users.noreply.github.com"
         }
     ],
-    "require": {
-		"hekmatinasser/verta": "^8.3",
-	}
+    "require": {}
 }
