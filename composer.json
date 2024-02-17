@@ -2,7 +2,7 @@
     "name": "omid-aghakhani/utility",
     "description": "Contains a series of files to help programming, improvement and others",
     "type": "library",
-	"license":'MIT",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "OmidAghakhani\\Utility\\": "src/"
