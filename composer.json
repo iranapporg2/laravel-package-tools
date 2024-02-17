@@ -15,5 +15,12 @@
         }
     ],
 	"minumum-stability":"stable",
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "src/MainProvider"
+            ]
+        }
+    }
 }
