@@ -9,7 +9,7 @@
 		public function boot() {
 
 			$this->publishes([
-				'config/utility.php' => config_path('utility.php')
+				__DIR__.'/../config/utility.php' => config_path('utility.php')
 			]);
 
 		}
