@@ -14,5 +14,6 @@
             "email": "157590431+iranapporg2@users.noreply.github.com"
         }
     ],
+	"minumum-stability":"stable",
     "require": {}
 }
