@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Providers;
+    namespace OmidAghakhani\Utility\Providers;
 
     use Illuminate\Support\ServiceProvider;
     use Illuminate\Support\Str;
@@ -12,7 +12,7 @@
         public function register(): void {
 
 			Str::macro('toPrice',function ($str) {
-			return number_format($str,0);
+				return number_format($str,0);
 			});
 
 			Str::macro('toLatin',function ($str) {
@@ -23,12 +23,9 @@
 
 				$t = str_replace($fa_num1, $en_num, $str);
 				$t = str_replace($fa_num, $en_num, $t);
-				$t = str_replace('۰','0',$t);
-				return $t;
+				return str_replace('۰','0',$t);
 				
-			}
-		
-            });
+			});
 			
         }
 
@@ -38,4 +35,5 @@
         public function boot(): void {
             //
         }
+
     }

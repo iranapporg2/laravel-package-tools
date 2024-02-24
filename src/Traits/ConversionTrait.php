@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Traits;
+	namespace OmidAghakhani\Utility\Traits;
 
     use Illuminate\Support\Str;
 
@@ -31,34 +31,44 @@
         // Method to convert the specified date fields to Persian date format
         protected function convertDates()
         {
-            foreach ($this->convertDateFields as $field) {
-                // Get the value of the date field
-                $value = $this->getAttribute($field);
 
-                // Convert the Gregorian date to Persian date
-                // You need to implement the logic for conversion
-                $persianDate = verta($value)->format('Y/m/d');
+			if (isset($this->convertDateFields)) {
 
-                // Set the converted value back to the model
-                $this->setAttribute($field, $persianDate);
-            }
+				foreach ($this->convertDateFields as $field) {
+					// Get the value of the date field
+					$value = $this->getAttribute($field);
+
+					// Convert the Gregorian date to Persian date
+					// You need to implement the logic for conversion
+					$persianDate = verta($value)->format('Y/m/d');
+
+					// Set the converted value back to the model
+					$this->setAttribute($field, $persianDate);
+				}
+
+			}
+
         }
 
         // Method to convert the specified date fields to Persian date format
         protected function convertPrices()
         {
-            foreach ($this->convertNumberFields as $field) {
-                // Get the value of the date field
-                $value = $this->getAttribute($field);
 
-                // Convert the Gregorian date to Persian date
-                // You need to implement the logic for conversion
-                $value = Str::replace(',','',$value);
-                $persianDate = number_format($value,0);
+			if (isset($this->convertNumberFields)) {
+				foreach ($this->convertNumberFields as $field) {
+					// Get the value of the date field
+					$value = $this->getAttribute($field);
 
-                // Set the converted value back to the model
-                $this->setAttribute($field, $persianDate);
-            }
+					// Convert the Gregorian date to Persian date
+					// You need to implement the logic for conversion
+					$value = Str::replace(',', '', $value);
+					$persianDate = number_format($value, 0);
+
+					// Set the converted value back to the model
+					$this->setAttribute($field, $persianDate);
+				}
+			}
+
         }
 
 	}

@@ -11,11 +11,12 @@
     "authors": [
         {
             "name": "Omid Aghakhani",
-            "email": "157590431+iranapporg2@users.noreply.github.com"
+            "email": "info@iranapp.org"
         }
     ],
 	"minumum-stability":"stable",
     "require": {},
+    "version": "1.0.0",
     "extra": {
         "laravel": {
             "providers": [
