@@ -27,6 +27,10 @@
 				return str_replace('۰','0',$t);
 				
 			});
+
+			Str::macro('toPersianDate',function ($date) {
+				return Str::toLatin(verta($date)->format('Y/m/d'));
+			});
 			
         }
 
