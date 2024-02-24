@@ -20,10 +20,7 @@
 
             static::retrieved(function ($model) {
                 $model->convertDates();
-            });
-
-            static::retrieved(function ($model) {
-                $model->convertPrices();
+				$model->convertPrices();
             });
 
         }
