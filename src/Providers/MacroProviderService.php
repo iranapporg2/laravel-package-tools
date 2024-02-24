@@ -29,7 +29,7 @@
 			});
 
 			Str::macro('toPersianDate',function ($date) {
-				return Str::toLatin(verta($date)->format('Y/m/d'));
+				return verta(Str::toLatin($date))->format('Y/m/d');
 			});
 			
         }
