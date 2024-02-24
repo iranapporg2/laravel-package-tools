@@ -11,6 +11,10 @@
 			$this->publishes([
 				__DIR__.'/../config/utility.php' => config_path('utility.php')
 			]);
+			
+			$this->publishes([
+				__DIR__.'/../resources' => base_path()
+			],'languages');
 
 		}
 
