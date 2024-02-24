@@ -12,7 +12,7 @@
          */
         public function register(): void {
 
-			Str::macro('toPrice',function ($str) {
+			Str::macro('toCurrency',function ($str) {
 				return number_format($str,0);
 			});
 
