@@ -13,7 +13,7 @@
 			]);
 			
 			$this->publishes([
-				__DIR__.'/../resources' => base_path()
+				__DIR__.'/../resources' => base_path().'/resources'
 			],'languages');
 
 		}
