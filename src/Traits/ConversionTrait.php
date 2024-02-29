@@ -9,63 +9,52 @@
      *
      * The ConversionTrait provides functionality to convert date fields to Persian dates
      * and number fields to Persian numbers.
-     * @property array $convertDateFields
-     * @property array $convertNumberFields
+	 * for convert date to persian, add protected variable named dates array type
+	 * for price format, add protected variable named prices array type
      */
-	trait ConversionTrait {
+	trait ConversionTrait
+	{
 
-        public static function boot()
-        {
-            parent::boot();
+		/**
+		 * Dynamically format date attributes to Persian date format.
+		 * @param  string  $key
+		 * @return mixed
+		 */
+		public function getAttribute($key)
+		{
+			$value = parent::getAttribute($key);
 
-            static::retrieved(function ($model) {
-                $model->convertDates();
-				$model->convertPrices();
-            });
-
-        }
-
-        // Method to convert the specified date fields to Persian date format
-        protected function convertDates()
-        {
-
-			if (isset($this->convertDateFields)) {
-
-				foreach ($this->convertDateFields as $field) {
-					// Get the value of the date field
-					$value = $this->getAttribute($field);
-
-					// Convert the Gregorian date to Persian date
-					// You need to implement the logic for conversion
-					$persianDate = verta($value)->format('Y/m/d');
-
-					// Set the converted value back to the model
-					$this->setAttribute($field, $persianDate);
-				}
-
+			// Check if the attribute ends with "_date" or "_at" to determine if it's a date field
+			if (in_array($key, $this->getDates()) && is_string($value)) {
+				return verta($value)->format('Y/m/d');
 			}
 
-        }
-
-        // Method to convert the specified date fields to Persian date format
-        protected function convertPrices()
-        {
-
-			if (isset($this->convertNumberFields)) {
-				foreach ($this->convertNumberFields as $field) {
-					// Get the value of the date field
-					$value = $this->getAttribute($field);
-
-					// Convert the Gregorian date to Persian date
-					// You need to implement the logic for conversion
-					$value = Str::replace(',', '', $value);
-					$persianDate = number_format($value, 0);
-
-					// Set the converted value back to the model
-					$this->setAttribute($field, $persianDate);
-				}
+			// Check if the attribute ends with "_price" or "_at" to determine if it's a date field
+			if (in_array($key, $this->getDates()) && is_string($value)) {
+				return verta($value)->format('Y/m/d');
 			}
 
-        }
+			return $value;
+		}
+
+		/**
+		 * Get the list of date attributes to be formatted in Persian format.
+		 *
+		 * @return array
+		 */
+		protected function getDates(): array
+		{
+			return property_exists($this, 'dates') ? $this->dates : [];
+		}
+
+		/**
+		 * Get the list of date attributes to be formatted in Persian format.
+		 *
+		 * @return array
+		 */
+		protected function getPrices(): array
+		{
+			return property_exists($this, 'prices') ? $this->prices : [];
+		}
 
 	}
