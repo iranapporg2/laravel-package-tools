@@ -25,12 +25,12 @@
 			$value = parent::getAttribute($key);
 
 			// Check if the attribute ends with "_date" or "_at" to determine if it's a date field
-			if (in_array($key, $this->getDates())) {
+			if (in_array($key, $this->getDatesName())) {
 				return verta($value)->format('Y/m/d');
 			}
 
 			// Check if the attribute ends with "_price" or "_at" to determine if it's a date field
-			if (in_array($key, $this->getPrices())) {
+			if (in_array($key, $this->getPricesName())) {
 				return number_format($value,0);
 			}
 
@@ -42,7 +42,7 @@
 		 *
 		 * @return array
 		 */
-		private function getDates(): array
+		private function getDatesName(): array
 		{
 			return property_exists($this, 'dates') ? $this->dates : [];
 		}
@@ -52,7 +52,7 @@
 		 *
 		 * @return array
 		 */
-		private function getPrices(): array
+		private function getPricesName(): array
 		{
 			return property_exists($this, 'prices') ? $this->prices : [];
 		}
