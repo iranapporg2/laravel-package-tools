@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Filters;
+    namespace OmidAghakhani\Utility\Filters;
 
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Support\Arr;

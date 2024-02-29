@@ -11,7 +11,6 @@
      * and number fields to Persian numbers.
 	 * for convert date to persian, add protected variable named dates array type
 	 * for price format, add protected variable named prices array type
-	 * @property array $dates
      */
 	trait ConversionTrait
 	{
