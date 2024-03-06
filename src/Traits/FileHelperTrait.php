@@ -26,7 +26,7 @@
 			$power = intval(floor(log($bytes, 1024)));
 			$size = round($bytes / pow(1024, $power), 2);
 
-			return $size . ' ' . $units[$power];
+			return $size . ' ' . trans("filehelper.{$units[$power]}");
 
 		}
 		
