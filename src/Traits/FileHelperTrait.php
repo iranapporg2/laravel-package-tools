@@ -1,16 +1,20 @@
 <?php
 
+	namespace OmidAghakhani\Utility\Traits;
+
+	use Illuminate\Support\Str;
+
 	trait FileHelperTrait {
 		
 		public function getTypeName($type): string {
 			
-			if (Str::contains($type,'application')) return 'فایل';
-			if (Str::contains($type,'image')) return 'تصویر';
-			if (Str::contains($type,'video')) return 'ویدئو';
-			if (Str::contains($type,'pdf')) return 'کتاب الکترونیکی';
-			if (Str::contains($type,'audio')) return 'صوتی';
+			if (Str::contains($type,'application')) return trans('filehelper.file');
+			if (Str::contains($type,'image')) return trans('filehelper.image');
+			if (Str::contains($type,'video')) return trans('filehelper.video');
+			if (Str::contains($type,'pdf')) return trans('filehelper.pdf');
+			if (Str::contains($type,'audio')) return trans('filehelper.audio');
 
-			return 'فایل';
+			return trans('filehelper.file');
 
 		}
 
