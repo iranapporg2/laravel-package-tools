@@ -1,6 +1,6 @@
 <?php
 
-	class FileHelperTrait {
+	trait FileHelperTrait {
 		
 		public function getTypeName($type): string {
 			
