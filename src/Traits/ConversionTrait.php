@@ -4,18 +4,17 @@
 
     use Illuminate\Support\Str;
 
-    /**
-     * Trait ConversionTrait
-     *
-     * The ConversionTrait provides functionality to convert date fields to Persian dates
-     * and number fields to Persian numbers.
-	 * for convert date to persian, add protected variable named dates array type
-	 * for price format, add protected variable named prices array type
-     */
 	trait ConversionTrait
 	{
 
-		function secondsToTime($time,$hour = true,$minute = true,$second = true) {
+		/**
+		 * @param int $time timestamp and int format
+		 * @param bool $hour only get hour
+		 * @param bool $minute only get minute
+		 * @param bool $second only get second
+		 * @return float|string
+		 */
+		function secondsToTime($time,$hour = true,$minute = true,$second = true): float|string {
 
 			if ($hour && !$minute && !$second) return floor($time / 3600);
 			if ($minute && !$hour && !$second) return floor($time / 60);
@@ -50,6 +49,11 @@
 
 		}
 
+		/**
+		 * convert time to readable data (ex 10 days ago)
+		 * @param int|date $datetime
+		 * @return false|int|mixed|string
+		 */
 		function timeToAgo($datetime) {
 
 			if (preg_match('/^\d+$/', $datetime)) {
