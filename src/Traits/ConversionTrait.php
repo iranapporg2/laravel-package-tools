@@ -1,6 +1,6 @@
 <?php
 
-	namespace OmidAghakhani\Utility\Traits;
+	namespace Iranapp\Tools\Traits;
 
     use Illuminate\Support\Str;
 

@@ -1,6 +1,6 @@
 <?php
 
-    namespace OmidAghakhani\Utility\Rules;
+    namespace Iranapp\Tools\Rules;
 
     use Closure;
     use Illuminate\Contracts\Validation\ValidationRule;

@@ -1,11 +1,11 @@
 {
-    "name": "iranapp.org/tools",
+    "name": "iranapp/tools",
     "description": "Contains a series of files to help programming, improvement and others",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "OmidAghakhani\\Utility\\": "src/"
+            "iranapp\\Tools\\": "src/"
         }
     },
     "authors": [
@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "OmidAghakhani\\Utility\\MainProvider"
+                "Iranapp\\Tools\\MainProvider"
             ]
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-    namespace OmidAghakhani\Utility\Providers;
+    namespace Iranapp\Tools\Providers;
 
     use Illuminate\Support\Facades\Schema;
 	use Illuminate\Support\ServiceProvider;

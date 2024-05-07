@@ -1,6 +1,6 @@
 <?php
 
-	namespace OmidAghakhani\Utility;
+	namespace Iranapp\Tools;
 
 	use Illuminate\Support\ServiceProvider;
 

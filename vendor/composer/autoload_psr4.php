@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'OmidAghakhani\\Utility\\' => array($baseDir . '/src'),
+    'iranapp\\Tools\\' => array($baseDir . '/src'),
 );
