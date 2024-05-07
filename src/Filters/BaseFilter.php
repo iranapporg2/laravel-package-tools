@@ -1,6 +1,6 @@
 <?php
 
-    namespace Iranapp\Tools\Filters;
+    namespace iranapp\Tools\Filters;
 
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Support\Arr;

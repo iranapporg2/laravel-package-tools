@@ -3,7 +3,7 @@
         'name' => 'iranapp/tools',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '1148a14130aab294135ea26ce0dc9550f43801fb',
+        'reference' => 'aa1bd482f049386ce0c1625dad533ec2e8165de4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'iranapp/tools' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1148a14130aab294135ea26ce0dc9550f43801fb',
+            'reference' => 'aa1bd482f049386ce0c1625dad533ec2e8165de4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

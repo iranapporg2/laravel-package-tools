@@ -1,6 +1,6 @@
 <?php
 
-	namespace Iranapp\Tools;
+	namespace iranapp\Tools;
 
 	use Illuminate\Support\ServiceProvider;
 
