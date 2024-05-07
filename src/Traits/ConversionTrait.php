@@ -15,46 +15,259 @@
 	trait ConversionTrait
 	{
 
-		/**
-		 * Dynamically format date attributes to Persian date format.
-		 * @param  string  $key
-		 * @return mixed
-		 */
-		public function getAttribute($key)
-		{
-			$value = parent::getAttribute($key);
+		function secondsToTime($time,$hour = true,$minute = true,$second = true) {
 
-			// Check if the attribute ends with "_date" or "_at" to determine if it's a date field
-			if (in_array($key, $this->getDatesName())) {
-				return verta($value)->format('Y/m/d');
-			}
+			if ($hour && !$minute && !$second) return floor($time / 3600);
+			if ($minute && !$hour && !$second) return floor($time / 60);
+			if (!$minute && !$hour && $second) return floor($time % 60);
 
-			// Check if the attribute ends with "_price" or "_at" to determine if it's a date field
-			if (in_array($key, $this->getPricesName())) {
-				return number_format($value,0);
-			}
+			$days = floor($time / (60 * 60 * 24));
+			$time -= $days * (60 * 60 * 24);
 
-			return $value;
+			$hours = floor($time / (60 * 60));
+			$time -= $hours * (60 * 60);
+
+			$minutes = floor($time / 60);
+			$time -= $minutes * 60;
+
+			$seconds = floor($time);
+			$time -= $seconds;
+
+			$final = '';
+			if ($days > 0)
+				$final .= "{$days} روز";
+
+			if ($hours > 0)
+				$final .= " {$hours} ساعت";
+
+			if ($minutes > 0)
+				$final .= " {$minutes} دقیقه";
+
+			if ($seconds > 0)
+				$final .= " {$seconds} ثانیه";
+
+			return $final;
+
 		}
 
-		/**
-		 * Get the list of date attributes to be formatted in Persian format.
-		 *
-		 * @return array
-		 */
-		private function getDatesName(): array
-		{
-			return property_exists($this, 'dates') ? $this->dates : [];
+		function timeToAgo($datetime) {
+
+			if (preg_match('/^\d+$/', $datetime)) {
+				$last_date = $datetime;
+			} else
+				$last_date = strtotime($datetime);
+
+			$now = time();
+			$time = $last_date;
+			// catch error
+			if (!$time) {
+				return $last_date;
+			}
+			// build period and length arrays
+			$periods = array('ثانیه', 'دقیقه', 'ساعت', 'روز', 'هفته', 'ماه', 'سال', 'قرن');
+			$lengths = array(60, 60, 24, 7, 4.35, 12, 10);
+			// get difference
+			$difference = $now - $time;
+			// set descriptor
+			if ($difference < 0) {
+				$difference = abs($difference); // absolute value
+				$negative = true;
+			}
+			// do math
+			for ($j = 0; $difference >= $lengths[$j] and $j < count($lengths) - 1; $j++) {
+				$difference /= $lengths[$j];
+			}
+			// round difference
+			$difference = intval(round($difference));
+
+			if ($difference == 0) return 'لحظاتی پیش';
+
+			// return
+			return number_format($difference) . ' ' . $periods[$j] . ' ' . (isset($negative) ? '' : 'پیش');
+
 		}
 
-		/**
-		 * Get the list of date attributes to be formatted in Persian format.
-		 *
-		 * @return array
-		 */
-		private function getPricesName(): array
-		{
-			return property_exists($this, 'prices') ? $this->prices : [];
+		function numberToWord($strnum) {
+
+			if ($strnum == '0') return 'صفر';
+			$strnum = trim($strnum);
+			$size_e = strlen($strnum);
+
+			for ($i = 0; $i < $size_e; $i++) {
+				if (!($strnum [$i] >= "0" && $strnum [$i] <= "9")) {
+					die ("content of string must be number. " . 'فقط عدد وارد کنید' . $strnum);
+
+				}
+			}
+
+			for ($i = 0; $i < $size_e && $strnum [$i] == "0"; $i++)
+				;
+
+			$str = substr($strnum, $i);
+			$size = strlen($str);
+
+			$arr = array();
+			$res = "";
+			$mod = $size % 3;
+			if ($mod) {
+				$arr [] = substr($str, 0, $mod);
+			}
+
+			for ($j = $mod; $j < $size; $j += 3) {
+				$arr [] = substr($str, $j, 3);
+			}
+
+			$arr1 = array("", "یک", "دو", "سه", "چهار", "پنج", "شش", "هفت", "هشت", "نه");
+			$arr2 = array(1 => "یازده", "دوازده", "سیزده", "چهارده", "پانزده", "شانزده", "هفده", "هجده", "نوزده");
+			$arr3 = array(1 => "ده", "بیست", "سی", "چهل", "پنجاه", "شصت", "هفتاد", "هشتاد", "نود");
+			$arr4 = array(1 => "صد", "دویست", "سیصد", "چهارصد", "پانصد", "ششصد", "هفتصد", "هشتصد", "نهصد");
+			$arr5 = array(1 => "هزار", "میلیون", "میلیارد", "تیلیارد");
+			$explode = 'و';
+			$size_arr = count($arr);
+
+			if ($size_arr > count($arr5) + 1) {
+				die ("عدد بسیار بزرگ است . " . 'this number is greate');
+
+			}
+
+			for ($i = 0; $i < $size_arr; $i++) {
+
+				$flag_2 = 0;
+				$flag_1 = 0;
+
+				if ($i) {
+					$res .= ' ' . $explode . ' ';
+				}
+
+				$p = $arr [$i];
+				$ss = strlen($p);
+
+				for ($k = 0; $k < $ss; $k++) {
+					if ($p [$k] != "0") {
+						break;
+					}
+				}
+
+				$p = substr($p, $k);
+				$size_p = strlen($p);
+
+				if ($size_p == 3) {
+					$res .= $arr4 [( int )$p [0]];
+					$p = substr($p, 1);
+					$size_p = strlen($p);
+
+					if ($p [0] == "0") {
+						$p = substr($p, 1);
+						$size_p = strlen($p);
+						if ($p [0] == "0") {
+							continue;
+						} else {
+							$flag_1 = 1;
+						}
+
+					} else {
+						$flag_2 = 1;
+					}
+
+				}
+
+				if ($size_p == 2) {
+
+					if ($flag_2) {
+						$res .= ' ' . $explode . ' ';
+					}
+
+					if ($p >= "0" && $p <= "9") {
+						$res .= $arr1 [( int )$p];
+					} elseif ($p >= "11" && $p <= "19") {
+						$res .= $arr2 [( int )$p [1]];
+					} elseif ($p [0] >= "1" && $p [0] <= "9" && $p [1] == "0") {
+						$res .= $arr3 [( int )$p [0]];
+					} else {
+						$res .= $arr3 [( int )$p [0]];
+						$res .= ' ' . $explode . ' ';
+						$res .= $arr1 [( int )$p [1]];
+					}
+
+				}
+
+				if ($size_p == 1) {
+
+					if ($flag_1) {
+						$res .= ' ' . $explode . ' ';
+					}
+
+					$res .= $arr1 [( int )$p];
+
+				}
+
+				if ($i + 1 < $size_arr) {
+					$res .= ' ' . $arr5 [$size_arr - $i - 1];
+				}
+
+			}
+
+			return rtrim($res, ' و');
+
+		}
+
+		function byteToWord($number, $precision = 3, $divisors = null) {
+
+			// Setup default $divisors if not provided
+			if (!isset($divisors)) {
+				$divisors = array(
+					pow(1000, 0) => '', // 1000^0 == 1
+					pow(1000, 1) => 'K', // Thousand
+					pow(1000, 2) => 'M', // Million
+					pow(1000, 3) => 'B', // Billion
+					pow(1000, 4) => 'T', // Trillion
+					pow(1000, 5) => 'Qa', // Quadrillion
+					pow(1000, 6) => 'Qi', // Quintillion
+				);
+			}
+
+			// Loop through each $divisor and find the
+			// lowest amount that matches
+			foreach ($divisors as $divisor => $shorthand) {
+				if (abs($number) < ($divisor * 1000)) {
+					// We found a match!
+					break;
+				}
+			}
+
+			// We found our match, or there were no matches.
+			// Either way, use the last defined value for $divisor.
+			return number_format($number / $divisor, $precision) . $shorthand;
+
+		}
+
+		function getPrecentage($total, $number) {
+			return $total > 0 ? number_format(($number * 100) / $total, 0) : 0;
+		}
+
+		function removeArabicCharater($str) {
+			$str = str_replace('ك','ک',$str);
+			return str_replace('ي','ی',$str);
+		}
+
+		function dateToPersian($date,$format = 'Y/m/d') {
+			return verta($this->toLatinNumber($date))->format($format);
+		}
+
+		function toLatinNumber($str) {
+
+			$en_num = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+			$fa_num = array('٠', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
+			$fa_num1 = array('٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩');
+
+			$t = str_replace($fa_num1, $en_num, $str);
+			$t = str_replace($fa_num, $en_num, $t);
+			return str_replace('۰','0',$t);
+
+		}
+
+		function toCurrencyFormat($number) {
+			return number_format($this->toLatinNumber($number),0);
 		}
 
 	}
