@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Providers;
+    namespace iranapp\Tools\Providers;
 
     use App\Enums\GenderEnum;
     use App\Enums\StateEnum;
