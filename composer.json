@@ -16,7 +16,8 @@
     ],
 	"minumum-stability":"stable",
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "ext-curl": "*"
     },
     "extra": {
         "laravel": {
