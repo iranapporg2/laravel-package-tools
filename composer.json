@@ -1,6 +1,6 @@
 {
     "name": "iranapp/tools",
-    "description": "Contains a series of files to help programming, improvement and others",
+    "description": "Good experience working in Laravel with full package",
     "type": "library",
     "license": "MIT",
     "autoload": {
