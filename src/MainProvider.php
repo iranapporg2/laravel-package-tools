@@ -1,5 +1,6 @@
 <?php
 
+	//auto publish needing files
 	namespace iranapp\Tools;
 
 	use Illuminate\Support\Facades\Schema;
