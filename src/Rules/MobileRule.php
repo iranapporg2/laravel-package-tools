@@ -13,7 +13,7 @@
          */
         public function validate(string $attribute, mixed $value, Closure $fail): void {
 
-            $value = \Str::toLatin($value);
+            $value = \Str::sanitizeNumber($value);
 
             if (!preg_match('/^0\d{9,12}$/',$value))
                 $fail('شماره موبایل را درست وارد کنید');

@@ -26,6 +26,10 @@
 				__DIR__.'/../config/auth.php' => config_path('my_auth.php'),
 			]);
 
+			$this->publishes([
+				__DIR__.'/../bootstrap/app.php' => base_path('bootstrap'),
+			]);
+
 			Schema::defaultStringLength(220);
 
 		}

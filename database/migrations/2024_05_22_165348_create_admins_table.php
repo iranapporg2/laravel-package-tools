@@ -9,7 +9,8 @@
          * Run the migrations.
          */
         public function up(): void {
-            Schema::create('admins', function (Blueprint $table) {
+
+			Schema::create('admins', function (Blueprint $table) {
                 $table->id();
                 $table->string('username',255);
                 $table->string('password',255);
@@ -17,6 +18,13 @@
                 $table->string('avatar',255)->nullable();
                 $table->timestamps();
             });
+
+			DB::table('admins')->insert([
+				'username' => 'admin',
+				'password' => Hash::make('12345'),
+				'full_name' => 'مدیریت'
+			]);
+
         }
 
         /**
