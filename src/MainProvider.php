@@ -11,15 +11,16 @@
 		public function boot() {
 
 			$this->publishes([
-				__DIR__.'/../config' => config_path('tools'),
-				__DIR__.'/../database/migrations/2024_05_22_165348_create_admins_table.php'  => database_path('2024_05_22_165348_create_admins_table.php'),
-				__DIR__.'/../database/migrations/2024_06_03_165820_create_otps_table.php' => database_path('2024_06_03_165820_create_otps_table.php'),
-				__DIR__.'/../database/migrations/2024_06_12_162907_create_settings_table.php' => database_path('2024_06_12_162907_create_settings_table.php'),
+				__DIR__.'/../config' => config_path(),
 			]);
 
 			$this->publishes([
+				__DIR__.'/../database/migrations'  => database_path('migrations'),
+			],'migration');
+
+			$this->publishes([
 				__DIR__.'/../resources' => base_path().'/resources'
-			],'languages');
+			],'resource');
 
 			$this->publishes([
 				__DIR__.'/../config/auth.php' => config_path('my_auth.php'),
