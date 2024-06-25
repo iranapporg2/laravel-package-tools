@@ -22,7 +22,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "iranapp\\Tools\\MainProvider"
+                "iranapp\\Tools\\MainProvider",
+                "iranapp\\Tools\\Providers\\PaymentServiceProvider"
             ]
         }
     }
