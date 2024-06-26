@@ -30,9 +30,9 @@
     }
 
     function successBack($message = null) {
-        return back()->with('message',$message ?? 'تغییرات با موفقیت اعمال شد');
+        return back()->with('message',$message ?? trans('custom.message.success'));
     }
 
     function failBack($message = null) {
-        return back()->with('message',$message ?? 'متاسفانه ');
+        return back()->with('message',$message ?? trans('custom.message.failed'));
     }

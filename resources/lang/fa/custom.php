@@ -1,6 +1,7 @@
 <?php
 
 	return [
+
 		'yes' => 'بله',
 		'no' => 'خیر',
 
@@ -10,5 +11,8 @@
 		'state.new' => 'جدید',
 		'state.active' => 'فعال',
 		'state.inactive' => 'غیرفعال',
+
+		'message.success' => 'تغییرات با موفقیت اعمال شد',
+		'message.failed' => 'متاسفانه عملیات با شکست مواجه شد'
 
 	];
