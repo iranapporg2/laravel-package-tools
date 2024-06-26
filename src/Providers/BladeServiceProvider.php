@@ -53,12 +53,19 @@
             });
 
             Blade::directive('toYesNo',function ($str) {
-                return "<?php echo $str == 1 ? 'بله' : 'خیر'; ?>";
+                return "<?php echo $str == 1 ? trans('custom.yes') : trans('custom.no'); ?>";
             });
 
             Blade::directive('Setting',function ($key) {
                 return "<?php echo App\Models\Setting::Get($key); ?>";
             });
+
+			Blade::directive('isActiveRoute',function ($arg) {
+				$str = explode(',',$arg);
+				if (count($str) == 1)
+					$str[] = '';
+				return "<?php echo isActiveRoute($str[0],$str[1]); ?>";
+			});
 
         }
     }

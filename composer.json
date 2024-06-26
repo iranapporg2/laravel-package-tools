@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "iranapp\\Tools\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "authors": [
         {

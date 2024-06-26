@@ -16,8 +16,8 @@
 			if (gettype($gender) != 'object')
 				$gender = GenderEnum::from($gender);
 
-            if ($gender == GenderEnum::MALE) return trans('enum.gender.male');
-            if ($gender == GenderEnum::FEMALE) return trans('enum.gender.female');
+            if ($gender == GenderEnum::MALE) return trans('custom.gender.male');
+            if ($gender == GenderEnum::FEMALE) return trans('custom.gender.female');
 
             return '-';
 
