@@ -22,13 +22,13 @@
 				__DIR__.'/../resources' => base_path().'/resources'
 			],'laravel-assets');
 
-			$this->publishes([
+			/*$this->publishes([
 				__DIR__.'/../config/auth.php' => config_path('my_auth.php'),
-			]);
+			]);*/
 
-			$this->publishes([
+			/*$this->publishes([
 				__DIR__.'/../bootstrap/app.php' => base_path('bootstrap'),
-			]);
+			]);*/
 
 			Schema::defaultStringLength(220);
 
@@ -37,9 +37,9 @@
 		public function register()
 		{
 			// Merge the configuration file
-			$this->mergeConfigFrom(
+			/*$this->mergeConfigFrom(
 				__DIR__.'/../config/auth.php', 'auth'
-			);
+			);*/
 		}
 
 	}
