@@ -3,8 +3,10 @@
 	//auto publish needing files
 	namespace iranapp\Tools;
 
+	use Illuminate\Foundation\Http\Kernel;
 	use Illuminate\Support\Facades\Schema;
 	use Illuminate\Support\ServiceProvider;
+	use iranapp\Tools\Middlewares\SanitizeMiddleware;
 
 	class MainProvider extends ServiceProvider {
 
@@ -33,6 +35,9 @@
 			Schema::defaultStringLength(220);
 
 			$this->loadRoutesFrom(__DIR__.'/other/routes/artisan.php');
+
+			$kernel = $this->app->make(Kernel::class);
+			$kernel->pushMiddleware(SanitizeMiddleware::class);
 
 		}
 
