@@ -25,7 +25,7 @@
 
 		}
 
-		public static function Get($key) {
+		public static function getValue($key,$default = null) {
 
 			$all = null;
 
@@ -33,13 +33,13 @@
 				$all = Setting::pluck('value','key')->all();
 			});
 
-			if (!isset($all[$key])) return false;
+			if (!isset($all[$key])) return $default;
 
 			return $all[$key];
 
         }
 
-		public static function GetAll() {
+		public static function getAll() {
 
 			\Cache::remember('settings',86400,function () use (&$all) {
 				$all = Setting::pluck('value','key')->all();

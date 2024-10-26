@@ -6,32 +6,23 @@
 
     class SmsService {
 
-		/**
-		 * Send sms with sms.ir new api version
-		 * @param $mobile
-		 * @param array|string $text
-		 * @param $template_id
-		 * @return SmsResult
-		 */
+		private static $parameters = [];
+
+		public static function ResetValue() {
+			self::$parameters = [];
+		}
+
+		public static function AddValue($name,$value) {
+			self::$parameters[] = array('name' => $name, 'value' => $value);
+		}
+
         public static function Send($mobile, array|string $text, $template_id): SmsResult {
 
             $token = config('sms.api-key');
 
-			if (!is_array($text))
-            	$parameters[] = ['name' => config('sms.parameter_name'),'value' => $text];
-			else {
-
-				$parameters[] = ['name' => config('sms.parameter_name'),'value' => $text[0]];
-
-				for ($i = 1; $i < count($text) - 1; $i++) {
-					$parameters[] = ['name' => config('sms.parameter_name').$i,'value' => $text];
-				}
-
-			}
-
-            $data['mobile'] = $mobile;
-            $data['templateId'] = $template_id;
-            $data['parameters'] = $parameters;
+			$data['mobile'] = $mobile;
+			$data['templateId'] = $template_id;
+			$data['parameters'] = self::$parameters;
 
             $curl = curl_init();
 

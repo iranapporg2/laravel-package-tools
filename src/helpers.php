@@ -1,8 +1,9 @@
 <?php
 
     use Illuminate\Support\Facades\Route;
+	use iranapp\Tools\Helpers\ConversionHelper;
 
-    if (!function_exists('isActiveRoute')) {
+	if (!function_exists('isActiveRoute')) {
         function isActiveRoute($routePatterns, $output = "active")
         {
             if (!is_array($routePatterns)) {
@@ -36,3 +37,9 @@
     function failBack($message = null) {
         return back()->with('message',$message ?? trans('custom.message.failed'));
     }
+
+	if (!function_exists('conversion')) {
+		function conversion() {
+			return new ConversionHelper();
+		}
+	}

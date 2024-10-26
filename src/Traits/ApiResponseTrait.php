@@ -4,7 +4,7 @@
 
 	trait ApiResponseTrait {
 
-        public function respondWithJson($status,$message = '',$data = null,$statusCode = 200): \Illuminate\Http\JsonResponse {
+        public function json($status,$message = '',$data = null,$statusCode = 200): \Illuminate\Http\JsonResponse {
 
             $message = [
                 'status' => $status,

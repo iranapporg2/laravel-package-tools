@@ -13,7 +13,7 @@
          * @param array<string, mixed> $attributes
          */
         public function get(Model $model, string $key, mixed $value, array $attributes): mixed {
-            return number_format((int) Str::sanitizeNumber($value),0);
+            return number_format((int) conversion()->santinize($value),0);
         }
 
         /**
@@ -22,6 +22,6 @@
          * @param array<string, mixed> $attributes
          */
         public function set(Model $model, string $key, mixed $value, array $attributes): mixed {
-            return $value;
+            return str_replace(',','',$value);
         }
     }

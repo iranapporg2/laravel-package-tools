@@ -7,6 +7,7 @@
 
 		'gender.male' => 'آقا',
 		'gender.female' => 'خانم',
+		'gender.other' => 'سایر',
 
 		'state.new' => 'جدید',
 		'state.active' => 'فعال',

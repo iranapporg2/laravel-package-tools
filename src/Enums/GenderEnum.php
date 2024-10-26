@@ -2,25 +2,22 @@
 
 	namespace iranapp\Tools\Enums;
 
-	enum GenderEnum:String {
+	enum GenderEnum: string {
 
-        case MALE = 'male';
-        case FEMALE = 'female';
+		case MALE = 'male';
+		case FEMALE = 'female';
+		case OTHER = 'other';
 
-        public static function asArray(): array {
-            return ['male','female'];
-        }
+		public static function title($gender) {
+			return self::arrays()[$gender];
+		}
 
-        public static function title($gender) {
-
-			if (gettype($gender) != 'object')
-				$gender = GenderEnum::from($gender);
-
-            if ($gender == GenderEnum::MALE) return trans('custom.gender.male');
-            if ($gender == GenderEnum::FEMALE) return trans('custom.gender.female');
-
-            return '-';
-
-        }
+		public static function arrays(): array {
+			return [
+				'male' => trans('custom.gender.male'),
+				'female' => trans('custom.gender.female'),
+				'other' => trans('custom.gender.other'),
+			];
+		}
 
 	}

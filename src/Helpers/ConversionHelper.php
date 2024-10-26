@@ -1,11 +1,8 @@
 <?php
 
-	namespace iranapp\Tools\Traits;
+	namespace iranapp\Tools\Helpers;
 
-    use Illuminate\Support\Str;
-
-	trait ConversionTrait
-	{
+	class ConversionHelper {
 
 		/**
 		 * @param int $time timestamp and int format
@@ -14,7 +11,7 @@
 		 * @param bool $second only get second
 		 * @return float|string
 		 */
-		function secondsToTime($time,$hour = true,$minute = true,$second = true): float|string {
+		function second2time($time,$hour = true,$minute = true,$second = true): float|string {
 
 			if ($hour && !$minute && !$second) return floor($time / 3600);
 			if ($minute && !$hour && !$second) return floor($time / 60);
@@ -54,7 +51,7 @@
 		 * @param int|date $datetime
 		 * @return false|int|mixed|string
 		 */
-		function timeToAgo($datetime) {
+		function ago($datetime) {
 
 			if (preg_match('/^\d+$/', $datetime)) {
 				$last_date = $datetime;
@@ -91,7 +88,7 @@
 
 		}
 
-		function numberToWord($strnum) {
+		function num2word($strnum) {
 
 			if ($strnum == '0') return 'صفر';
 			$strnum = trim($strnum);
@@ -215,7 +212,7 @@
 
 		}
 
-		function byteToWord($number, $precision = 3, $divisors = null) {
+		function byte2word($number, $precision = 3, $divisors = null) {
 
 			// Setup default $divisors if not provided
 			if (!isset($divisors)) {
@@ -245,20 +242,14 @@
 
 		}
 
-		function getPrecentage($total, $number) {
+		function precent($total, $number) {
 			return $total > 0 ? number_format(($number * 100) / $total, 0) : 0;
 		}
 
-		function removeArabicCharater($str) {
+		function santinize($str) {
+
 			$str = str_replace('ك','ک',$str);
-			return str_replace('ي','ی',$str);
-		}
-
-		function dateToPersian($date,$format = 'Y/m/d') {
-			return verta($this->toLatinNumber($date))->format($format);
-		}
-
-		function toLatinNumber($str) {
+			$str = str_replace('ي','ی',$str);
 
 			$en_num = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 			$fa_num = array('٠', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
@@ -270,8 +261,28 @@
 
 		}
 
-		function toCurrencyFormat($number) {
-			return number_format($this->toLatinNumber($number),0);
+		/**
+		 * convert gregorian date to persian date
+		 * @param $gregorial_date
+		 * @param $format
+		 * @return string
+		 */
+		function persian($gregorian_date,$format = 'Y/m/d') {
+			return verta($this->santinize($gregorian_date))->format($format);
+		}
+
+		/**
+		 * convert persian date to gregorian date
+		 * @param $gregorial_date
+		 * @param $format
+		 * @return string
+		 */
+		function gregorian($persian_date,$format = 'Y-m-d') {
+			return \Verta::parse($persian_date)->datetime()->format($format);
+		}
+
+		function number($number) {
+			return number_format($this->santinize($number),0);
 		}
 
 	}
