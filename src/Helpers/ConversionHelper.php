@@ -246,7 +246,7 @@
 			return $total > 0 ? number_format(($number * 100) / $total, 0) : 0;
 		}
 
-		function santinize($str) {
+		function santinize($str,$remove_spaces = false) {
 
 			$str = str_replace('ك','ک',$str);
 			$str = str_replace('ي','ی',$str);
@@ -257,7 +257,11 @@
 
 			$t = str_replace($fa_num1, $en_num, $str);
 			$t = str_replace($fa_num, $en_num, $t);
-			return str_replace('۰','0',$t);
+			$t = str_replace('۰','0',$t);
+
+			$t = preg_replace('/\s+/', '', $t);
+
+			return $t;
 
 		}
 

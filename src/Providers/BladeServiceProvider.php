@@ -21,24 +21,28 @@
          */
         public function boot(): void {
 
-            Blade::directive('toCurrency',function ($str) {
+			Blade::directive('Request',function ($str) {
+				return "<?php echo request($str); ?>";
+			});
+
+            Blade::directive('Currency',function ($str) {
                 return "<?php echo number_format($str,0); ?>";
             });
 
-            Blade::directive('toStatus',function ($str) {
+            Blade::directive('Status',function ($str) {
                 return "<?php
                 echo App\Enums\StateEnum::title($str);
                 ?>";
             });
 
-            Blade::directive('toGender',function ($gender) {
+            Blade::directive('Gender',function ($gender) {
                 return "<?php
                     echo App\Enums\GenderEnum::title($gender);
                 ?>";
 
             });
 
-            Blade::directive('toPersianDate',function ($str) {
+            Blade::directive('PersianDate',function ($str) {
                 $str = explode(',',$str);
 
                 if (count($str) == 1)
@@ -48,11 +52,11 @@
                         ?>";
             });
 
-            Blade::directive('toTime',function ($datetime) {
+            Blade::directive('Time',function ($datetime) {
                 return '<?php echo date("H:i",strtotime($datetime)); ?>';
             });
 
-            Blade::directive('toYesNo',function ($str) {
+            Blade::directive('YesNo',function ($str) {
                 return "<?php echo $str == 1 ? trans('custom.yes') : trans('custom.no'); ?>";
             });
 
