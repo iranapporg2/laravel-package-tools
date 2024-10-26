@@ -19,7 +19,7 @@
 			],'migration');
 
 			$this->publishes([
-				__DIR__.'/../resources' => base_path().'/resources'
+				__DIR__.'/../../resources' => base_path().'/resources'
 			],'laravel-assets');
 
 			/*$this->publishes([
