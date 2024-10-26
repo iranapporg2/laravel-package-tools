@@ -11,15 +11,15 @@
 		public function boot() {
 
 			$this->publishes([
-				__DIR__.'/../config' => config_path(),
+				__DIR__.'/config' => config_path(),
 			]);
 
 			$this->publishes([
-				__DIR__.'/../database/migrations'  => database_path('laravel-assets'),
+				__DIR__.'/database/migrations'  => database_path('laravel-assets'),
 			],'migration');
 
 			$this->publishes([
-				__DIR__.'/../resources' => base_path().'/resources'
+				__DIR__.'/resources' => base_path().'/resources'
 			],'laravel-assets');
 
 			/*$this->publishes([
