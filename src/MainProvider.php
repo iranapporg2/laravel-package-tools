@@ -36,7 +36,7 @@
 
 		public function register()
 		{
-			// Merge the configuration file
+			//Merge the configuration file
 			/*$this->mergeConfigFrom(
 				__DIR__.'/../config/auth.php', 'auth'
 			);*/
