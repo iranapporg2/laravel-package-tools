@@ -11,16 +11,16 @@
 		public function boot() {
 
 			$this->publishes([
-				__DIR__.'/config' => config_path(),
-			]);
+				__DIR__.'/other/config' => config_path(),
+			],'laravel-assets');
 
 			$this->publishes([
-				__DIR__.'/database/migrations'  => database_path('laravel-assets'),
-			],'migration');
+				__DIR__.'/other/database/migrations'  => database_path('laravel-assets'),
+			],'laravel-assets');
 
 			$this->publishes([
-				__DIR__.'\..\resources' => base_path('resources'),
-			], 'iranapp-resource');
+				__DIR__.'\other\resources' => base_path('resources'),
+			], 'laravel-assets');
 
 			/*$this->publishes([
 				__DIR__.'/../config/auth.php' => config_path('my_auth.php'),
