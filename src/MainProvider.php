@@ -19,8 +19,8 @@
 			],'migration');
 
 			$this->publishes([
-				__DIR__.'/../resources' => base_path().'/resources'
-			],'laravel-assets');
+				__DIR__.'\..\resources' => base_path('resources'),
+			], 'iranapp-resource');
 
 			/*$this->publishes([
 				__DIR__.'/../config/auth.php' => config_path('my_auth.php'),
