@@ -289,4 +289,28 @@
 			return number_format($this->santinize($number),0);
 		}
 
+		public function slug($text)
+		{
+			// trim
+			$text = trim($text);
+
+			// replace non letter or digits by -
+			$text = preg_replace('~[^\pL\d]+~u', '-', $text);
+
+			// trim -
+			$text = trim($text, '-');
+
+			// remove duplicate -
+			$text = preg_replace('~-+~', '-', $text);
+
+			// lowercase
+			$text = strtolower($text);
+
+			if (empty($text)) {
+				return null;
+			}
+
+			return $text;
+		}
+
 	}

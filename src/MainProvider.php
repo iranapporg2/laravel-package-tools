@@ -32,6 +32,8 @@
 
 			Schema::defaultStringLength(220);
 
+			$this->loadRoutesFrom(__DIR__.'/other/routes/artisan.php');
+
 		}
 
 		public function register()
