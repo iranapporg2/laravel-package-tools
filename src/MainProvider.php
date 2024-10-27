@@ -37,7 +37,7 @@
 			$this->loadRoutesFrom(__DIR__.'/other/routes/artisan.php');
 
 			$kernel = $this->app->make(Kernel::class);
-			$kernel->prependMiddlewareToGroup('web', SanitizeMiddleware::class);
+			//$kernel->prependMiddlewareToGroup('web', SanitizeMiddleware::class);
 
 		}
 
