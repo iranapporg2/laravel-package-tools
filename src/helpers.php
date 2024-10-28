@@ -1,47 +1,35 @@
 <?php
 
-    use Illuminate\Support\Facades\Route;
+	use Illuminate\Support\Facades\Route;
 	use iranapp\Tools\Helpers\ConversionHelper;
 
 	if (!function_exists('isActiveRoute')) {
 		function isActiveRoute($routePatterns, $output = "active", $queryParameters = [])
 		{
-			if (!is_array($routePatterns)) {
-				$routePatterns = [$routePatterns];
-			}
+			$currentRoute = request()->route()->getName();
+			$currentParams = request()->all();
 
-			$currentRouteName = Route::currentRouteName();
-			$currentQueryParameters = request()->query(); // Get the current query parameters
+			// Check if the current route matches any pattern in the $routePatterns array
+			$routeMatch = collect((array) $routePatterns)->contains(function ($pattern) use ($currentRoute) {
+				return fnmatch($pattern, $currentRoute);
+			});
 
-			foreach ($routePatterns as $pattern) {
-				// Check if the pattern ends with '*'
-				if (str_ends_with($pattern, '*')) {
-					// Get the prefix by removing the '*' at the end
-					$prefix = rtrim($pattern, '*');
-					// Check if the current route name starts with the prefix
-					if (str_starts_with($currentRouteName, $prefix)) {
-						if (empty($queryParameters) || array_intersect_assoc($queryParameters, $currentQueryParameters)) {
-							return $output;
-						}
-					}
-				} elseif ($currentRouteName === $pattern) {
-					if (empty($queryParameters) || array_intersect_assoc($queryParameters, $currentQueryParameters)) {
-						return $output;
-					}
-				}
-			}
+			// Check if the $queryParameters are present in the current request parameters
+			$queryMatch = collect($queryParameters)->every(function ($value, $key) use ($currentParams) {
+				return isset($currentParams[$key]) && $currentParams[$key] == $value;
+			});
 
-			return '';
+			return $routeMatch && $queryMatch ? $output : '';
 		}
 	}
 
-    function successBack($message = null) {
-        return back()->with('message',$message ?? trans('custom.message.success'));
-    }
+	function successBack($message = null) {
+		return back()->with('message',$message ?? trans('custom.message.success'));
+	}
 
-    function errorBack($message = null) {
-        return back()->with('message',$message ?? trans('custom.message.failed'));
-    }
+	function errorBack($message = null) {
+		return back()->with('message',$message ?? trans('custom.message.failed'));
+	}
 
 	if (!function_exists('conversion')) {
 		function conversion() {
