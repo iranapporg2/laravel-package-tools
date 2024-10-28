@@ -8,7 +8,7 @@
     use Illuminate\Support\Facades\Storage;
     use Illuminate\Support\ServiceProvider;
 
-    class BladeServiceProvider extends ServiceProvider {
+    class GenericBladeServiceProvider extends ServiceProvider {
         /**
          * Register services.
          */
