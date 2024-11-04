@@ -37,33 +37,6 @@
 		abort(404);
 	});
 
-	Route::get('/library/select2', function () {
-		return response()->make(
-			'<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>',
-			200,
-			['Content-Type' => 'text/html']
-		);
-	});
-
-	Route::get('/library/persiandate', function () {
-		return response()->make(
-			'<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
-			<link href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css" rel="stylesheet">',
-			200,
-			['Content-Type' => 'text/html']
-		);
-	});
-
-	Route::get('/library/sweetalert', function () {
-		return response()->make(
-			'<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css">',
-			200,
-			['Content-Type' => 'text/html']
-		);
-	});
-
 	Route::get('edit', function (Request $request) {
 
 		$id = $request->id;

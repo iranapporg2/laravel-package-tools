@@ -64,6 +64,23 @@
                 return "<?php echo App\Models\Setting::Get($key); ?>";
             });
 
+			Blade::directive('Library',function ($name) {
+				return '<?php
+					if ($name == "persiandate") {
+						echo \'<link href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css" rel="stylesheet">\';
+						echo \'<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>\';
+					}
+					if ($name == "select2") {
+						echo \'<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />\';
+						echo \'<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>\';
+					}
+					if ($name == "sweetalert") {
+						echo \'<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>\';
+						echo \'<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css">\';
+					}
+ 				?>';
+			});
+
 			Blade::directive('isActiveRoute',function ($arg) {
 				$str = explode(',',$arg);
 				if (count($str) == 1)
