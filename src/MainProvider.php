@@ -4,6 +4,7 @@
 	namespace iranapp\Tools;
 
 	use Illuminate\Foundation\Http\Kernel;
+	use Illuminate\Support\Facades\Route;
 	use Illuminate\Support\Facades\Schema;
 	use Illuminate\Support\ServiceProvider;
 	use iranapp\Tools\Middlewares\SanitizeMiddleware;
@@ -28,9 +29,15 @@
 				__DIR__.'/other/lang'  => lang_path(),
 			],'laravel-assets');
 
-			$this->publishes([
-				__DIR__.'/other/public'  => base_path('public'),
-			],'laravel-assets');
+			Route::get('my.js', function () {
+				$path = __DIR__ . '/../src/other/public/asset/my.js';
+				if (file_exists($path)) {
+					return response()->file($path, [
+						'Content-Type' => 'application/javascript'
+					]);
+				}
+				abort(404);
+			});
 
 			$this->publishes([
 				__DIR__.'\other\resources' => base_path('resources'),
