@@ -25,9 +25,8 @@
 				__DIR__.'/other/database/migrations'  => database_path('laravel-assets'),
 			],'laravel-assets');
 
-			$this->publishes([
-				__DIR__.'/other/lang'  => lang_path(),
-			],'laravel-assets');
+			//use it like {{ __('iranapp::messages.key') }}
+			//$this->loadTranslationsFrom(__DIR__.'/other/lang/fa', 'iranapp');
 
 			$this->publishes([
 				__DIR__.'\other\resources' => base_path('resources'),
