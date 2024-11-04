@@ -37,7 +37,23 @@
 		abort(404);
 	});
 
-	Route::get('ajax/update', function (Request $request) {
+	Route::get('edit', function (Request $request) {
+
+		$id = $request->id;
+		$key = $request->key;
+		$val = $request->value;
+		$model = $request->model;
+
+		$model = app('App\\Models\\'.$model);
+		$model = $model->find($id);
+		$model->{$key} = $val;
+		$model->update();
+
+		return response()->json(['status' => true]);
+
+	})->name('edit');
+
+	Route::get('fetch', function (Request $request) {
 
 		if (!$request->ajax())
 			return response()->json(['status' => false]);
@@ -57,4 +73,4 @@
 
 		return response()->json(['status' => true,'result' => $data]);
 
-	})->name('ajax.edit');
+	})->name('fetch');
