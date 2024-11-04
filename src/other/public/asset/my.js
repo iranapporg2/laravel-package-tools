@@ -8,7 +8,11 @@
  * <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
  * <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css">
  */
-
+/**
+ * add below script for select2
+ * <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+ * <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ */
 document.addEventListener("DOMContentLoaded", function () {
 
     $("a[data-modal]").click(function (e) {
@@ -347,6 +351,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    $("[data-persian]").each(function () {
+        $(this).pDatepicker({ initialValue:false, format: 'YYYY/MM/DD', autoClose: true})
+    });
+
+    $("[data-persian-init]").each(function () {
+        $(this).pDatepicker({ initialValue:true, format: 'YYYY/MM/DD', autoClose: true})
+    });
+
+    $("[data-time-picker]").each(function () {
+        $(this).pDatepicker({onlyTimePicker:true, initialValue:false, format: 'HH:mm', autoClose: true})
+    });
+
+    $('[data-select2]').each(function () {
+
+        var option = {};
+
+        if ($(this).data('select2-modal') !== undefined)
+            option.dropdownParent = $("#" + $(this).data('select2-modal'));
+
+        if ($(this).data('select2-placeholder') !== undefined)
+            option.placeholder = $("#" + $(this).data('select2-placeholder'));
+
+        if ($(this).data('select2-ajax') !== undefined) {
+            option.ajax = {
+                url: $(this).data('select2-ajax'),
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public'
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                },
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.items
+                    };
+                }
+            }
+        }
+
+        $(this).select(option);
+
+    });
+
 });
 
 function notify(text, type) {
@@ -394,18 +446,6 @@ function toCurrency(str) {
     return str;
 
 }
-
-$("[data-persian]").each(function () {
-    $(this).pDatepicker({ initialValue:false, format: 'YYYY/MM/DD', autoClose: true})
-});
-
-$("[data-persian-init]").each(function () {
-    $(this).pDatepicker({ initialValue:true, format: 'YYYY/MM/DD', autoClose: true})
-});
-
-$("[data-time-picker]").each(function () {
-    $(this).pDatepicker({onlyTimePicker:true, initialValue:false, format: 'HH:mm', autoClose: true})
-});
 
 function only_persian(str) {
     var p = /^[\u0600-\u06FF\s]+$/;
