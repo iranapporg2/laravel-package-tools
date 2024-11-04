@@ -395,9 +395,17 @@ function toCurrency(str) {
 
 }
 
-$("[data-persian]").pDatepicker({ initialValue:false, format: 'YYYY/MM/DD', autoClose: true})
-$("[data-persian-init]").pDatepicker({ initialValue:true, format: 'YYYY/MM/DD', autoClose: true})
-$("[data-time-picker]").pDatepicker({onlyTimePicker:true, initialValue:false, format: 'HH:mm', autoClose: true})
+$("[data-persian]").each(function () {
+    $(this).pDatepicker({ initialValue:false, format: 'YYYY/MM/DD', autoClose: true})
+});
+
+$("[data-persian-init]").each(function () {
+    $(this).pDatepicker({ initialValue:true, format: 'YYYY/MM/DD', autoClose: true})
+});
+
+$("[data-time-picker]").each(function () {
+    $(this).pDatepicker({onlyTimePicker:true, initialValue:false, format: 'HH:mm', autoClose: true})
+});
 
 function only_persian(str) {
     var p = /^[\u0600-\u06FF\s]+$/;
