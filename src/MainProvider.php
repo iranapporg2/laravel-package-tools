@@ -29,16 +29,6 @@
 				__DIR__.'/other/lang'  => lang_path(),
 			],'laravel-assets');
 
-			Route::get('my.js', function () {
-				$path = __DIR__ . '/../src/other/public/asset/my.js';
-				if (file_exists($path)) {
-					return response()->file($path, [
-						'Content-Type' => 'application/javascript'
-					]);
-				}
-				abort(404);
-			});
-
 			$this->publishes([
 				__DIR__.'\other\resources' => base_path('resources'),
 			], 'laravel-assets');
