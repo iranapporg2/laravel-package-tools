@@ -17,6 +17,10 @@
 			],'laravel-assets');
 
 			$this->publishes([
+				__DIR__.'/View/Components' => base_path('app/View/Components'),
+			],'laravel-assets');
+
+			$this->publishes([
 				__DIR__.'/other/database/migrations'  => database_path('laravel-assets'),
 			],'laravel-assets');
 
