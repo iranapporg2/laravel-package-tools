@@ -364,39 +364,51 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     $('[data-select2]').each(function () {
+        var option = {
+            allowClear: true
+        };
 
-        var option = {};
-
-        if ($(this).data('select2-modal') !== undefined)
+        // Set the dropdown parent if data-select2-modal is specified
+        if ($(this).data('select2-modal') !== undefined) {
             option.dropdownParent = $("#" + $(this).data('select2-modal'));
+        }
 
-        if ($(this).data('select2-placeholder') !== undefined)
-            option.placeholder = $("#" + $(this).data('select2-placeholder'));
+        if ($(this).data('select2-tag') !== undefined) {
+            option.tags = true;
+            option.tokenSeparators = [',', ' '];
+        }
 
+        if ($(this).parents('.modal.in:first').length !== 0)
+            option.dropdownParent = $(this).parents('.modal.in:first');
+
+        // Set the placeholder if data-select2-placeholder is specified
+        if ($(this).data('select2-placeholder') !== undefined) {
+            option.placeholder = $(this).data('select2-placeholder');
+        }
+
+        // Configure AJAX if data-select2-ajax is specified
         if ($(this).data('select2-ajax') !== undefined) {
             option.ajax = {
                 url: $(this).data('select2-ajax'),
                 dataType: 'json',
+                delay: 250, // Add delay for debounce
                 data: function (params) {
-                    var query = {
-                        search: params.term,
-                        type: 'public'
-                    }
-
-                    // Query parameters will be ?search=[term]&type=public
-                    return query;
+                    return {
+                        search: params.term, // search term
+                    };
                 },
                 processResults: function (data) {
-                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    // Transforms the top-level key of the response object to 'results'
                     return {
-                        results: data.items
+                        results: data.items // adjust this according to your response structure
                     };
-                }
-            }
+                },
+                cache: true
+            };
         }
 
-        $(this).select(option);
-
+        // Initialize select2 with the configured options
+        $(this).select2(option);
     });
 
 });
