@@ -36,3 +36,25 @@
 		}
 		abort(404);
 	});
+
+	Route::get('ajax/update', function (Request $request) {
+
+		if (!$request->ajax())
+			return response()->json(['status' => false]);
+
+		$model = $request->model;
+		$relate_id = $request->relate_id;
+		$relate_field = $request->relate_field;
+
+		$model = app('App\\Models\\'.$model);
+		$model = $model->where('id','<>',0);
+
+		if ($relate_id != '') {
+			$model->where($relate_field,'=',$relate_id);
+		}
+
+		$data = $model->get();
+
+		return response()->json(['status' => true,'result' => $data]);
+
+	})->name('ajax.edit');
