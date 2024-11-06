@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = await $.get('fetch',query,function (data) {
                 let list = {};
                 data.result.forEach(function (item) {
-                   list[item.id] = item.title;
+                    list[item.id] = item.title;
                 });
                 config.inputOptions = list;
             })
@@ -363,10 +363,16 @@ document.addEventListener("DOMContentLoaded", function () {
         $(this).pDatepicker({onlyTimePicker:true, initialValue:false, format: 'HH:mm', autoClose: true})
     });
 
-    $('[data-select2]').each(function () {
-        var option = {
-            allowClear: true
-        };
+    $('.select2').each(function () {
+        var option = {};
+
+        var selectHeight = $(this).css('height');
+        if (selectHeight) {
+            option.dropdownCss = {
+                height: selectHeight,
+                'line-height': selectHeight
+            };
+        }
 
         // Set the dropdown parent if data-select2-modal is specified
         if ($(this).data('select2-modal') !== undefined) {
@@ -377,9 +383,6 @@ document.addEventListener("DOMContentLoaded", function () {
             option.tags = true;
             option.tokenSeparators = [',', ' '];
         }
-
-        if ($(this).parents('.modal.in:first').length !== 0)
-            option.dropdownParent = $(this).parents('.modal.in:first');
 
         // Set the placeholder if data-select2-placeholder is specified
         if ($(this).data('select2-placeholder') !== undefined) {
@@ -409,6 +412,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Initialize select2 with the configured options
         $(this).select2(option);
+
+        if (selectHeight) {
+            $(this).next('.select2-container').find('.select2-selection--single').css({
+                'height': selectHeight,
+                'line-height': selectHeight,
+                'display': 'flex',
+                'align-items': 'center'
+            });
+
+            // Adjust the arrow container within the Select2 element
+            $(this).next('.select2-container').find('.select2-selection__arrow').css({
+                'height': selectHeight,
+                'display': 'flex',
+                'align-items': 'center'
+            });
+        }
+
     });
 
 });
