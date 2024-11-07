@@ -259,7 +259,7 @@
 			$t = str_replace($fa_num, $en_num, $t);
 			$t = str_replace('۰','0',$t);
 
-			$t = preg_replace('/\s+/', '', $t);
+			$t = preg_replace('/\s+/', ' ', $t);
 
 			return $t;
 
