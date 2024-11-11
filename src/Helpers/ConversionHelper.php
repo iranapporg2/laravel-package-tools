@@ -246,7 +246,7 @@
 			return $total > 0 ? number_format(($number * 100) / $total, 0) : 0;
 		}
 
-		function santinize($str,$remove_spaces = false) {
+		function sanitize($str,$remove_spaces = false) {
 
 			$str = str_replace('ك','ک',$str);
 			$str = str_replace('ي','ی',$str);
@@ -272,7 +272,7 @@
 		 * @return string
 		 */
 		function persian($gregorian_date,$format = 'Y/m/d') {
-			return verta($this->santinize($gregorian_date))->format($format);
+			return verta($this->sanitize($gregorian_date))->format($format);
 		}
 
 		/**
@@ -282,11 +282,11 @@
 		 * @return string
 		 */
 		function gregorian($persian_date,$format = 'Y-m-d') {
-			return \Verta::parse($persian_date)->datetime()->format($format);
+			return \Verta::parse($this->sanitize($persian_date))->datetime()->format($format);
 		}
 
 		function number($number) {
-			return number_format($this->santinize($number),0);
+			return number_format($this->sanitize($number),0);
 		}
 
 		public function slug($text)
