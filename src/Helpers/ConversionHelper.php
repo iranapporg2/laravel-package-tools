@@ -11,7 +11,7 @@
 		 * @param bool $second only get second
 		 * @return float|string
 		 */
-		function second2time($time,$hour = true,$minute = true,$second = true): float|string {
+		function secondToTime($time,$hour = true,$minute = true,$second = true): float|string {
 
 			if ($hour && !$minute && !$second) return floor($time / 3600);
 			if ($minute && !$hour && !$second) return floor($time / 60);
@@ -88,7 +88,7 @@
 
 		}
 
-		function num2word($strnum) {
+		function numToWord($strnum) {
 
 			if ($strnum == '0') return 'صفر';
 			$strnum = trim($strnum);
@@ -212,7 +212,7 @@
 
 		}
 
-		function byte2word($number, $precision = 3, $divisors = null) {
+		function byteToWord($number, $precision = 3, $divisors = null) {
 
 			// Setup default $divisors if not provided
 			if (!isset($divisors)) {
@@ -246,7 +246,7 @@
 			return $total > 0 ? number_format(($number * 100) / $total, 0) : 0;
 		}
 
-		function sanitize($str,$remove_spaces = false) {
+		function sanitize($str,$remove_spaces = true) {
 
 			$str = str_replace('ك','ک',$str);
 			$str = str_replace('ي','ی',$str);
@@ -259,7 +259,8 @@
 			$t = str_replace($fa_num, $en_num, $t);
 			$t = str_replace('۰','0',$t);
 
-			$t = preg_replace('/\s+/', ' ', $t);
+			if ($remove_spaces)
+				$t = preg_replace('/\s+/', ' ', $t);
 
 			return $t;
 
