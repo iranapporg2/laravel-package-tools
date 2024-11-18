@@ -11,13 +11,25 @@
          */
         protected static function bootTimezoneTrait()
         {
+
             static::creating(function ($model) {
+
                 $model->convertDateTimesToTehran();
+
+				if (empty($model->created_at)) {
+					$model->created_at = Carbon::now('Asia/Tehran');
+				}
+				if (empty($model->updated_at)) {
+					$model->updated_at = Carbon::now('Asia/Tehran');
+				}
+
             });
 
             static::updating(function ($model) {
                 $model->convertDateTimesToTehran();
+				$model->updated_at = Carbon::now('Asia/Tehran');
             });
+
         }
 
         /**
