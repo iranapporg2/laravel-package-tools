@@ -2,6 +2,8 @@
 
 	namespace iranapp\Tools\Filters;
 
+	use Illuminate\Database\Eloquent\Builder;
+
 	class CommonFilter extends BaseFilter {
 
 		public function active($active) {
@@ -56,6 +58,13 @@
 
 		public function UserId($UserId) {
 			return $this->query->where('user_id','=',$UserId);
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function default($column_name, $value): Builder {
+			return $this->query;
 		}
 
 	}
