@@ -60,6 +60,14 @@
 			return $this->query->where('user_id','=',$UserId);
 		}
 
+		public function latest($latest) {
+			return $this->query->orderBy($latest,'DESC');
+		}
+
+		public function oldest($oldest) {
+			return $this->query->orderBy($oldest,'ASC');
+		}
+
 		/**
 		 * @inheritDoc
 		 */

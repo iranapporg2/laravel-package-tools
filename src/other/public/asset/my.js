@@ -13,6 +13,21 @@
  * <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
  * <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
  */
+
+/**
+ * document for use this library
+ * a[data-model] => show a href on the modal
+ * [data-province] => get province's cities
+ * form[data-ajax] => post data with ajax
+ * input[data-price] => convert input value to number format
+ * [data-error] => any inputs has data-error, the form validation show it
+ * [data-slug] => convert input value to slug and show in the other input
+ * [data-format] => force user to custom format (number,persian,english)
+ * a[data-question] => show confirm dialog, set message for show it, data-prompt is placeholder
+ * [data-picker] => date,time,datetime , use data-picker-init for use initialValue for picker
+ * .select2 => data-select2-modal for set parent modal, data-select2-tag is tag, data-select2-placeholder is placeholder
+ * data-select2-ajax is ajax request contain url for fetch
+ */
 document.addEventListener("DOMContentLoaded", function () {
 
     $("a[data-modal]").click(function (e) {
@@ -152,10 +167,10 @@ document.addEventListener("DOMContentLoaded", function () {
     * set data-format attribute
     * format can number (you can set except character with data-except
      */
-
     $('[data-format]').on('change keyup paste keydown', function (event) {
 
         var code = (event.keyCode ? event.keyCode : event.which);
+        var inputValue = $(this).val(); // Get the current value of the input field
         var format = $(this).data('format');
 
         if (format === 'number') {
@@ -181,6 +196,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (format === 'persian') {
             if(only_persian(e.key) === false)
                 e.preventDefault();
+        }
+
+        if (format === 'english') {
+            const isEnglish = /^[a-zA-Z0-9\s]$/.test(event.key);
+            if (!isEnglish) {
+                event.preventDefault();  // Prevent the key press
+            }
         }
 
     });
@@ -351,6 +373,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    const elements = document.querySelectorAll("[data-persian],[data-time-picker],[data-picker]");
+    elements.forEach(element => {
+        element.addEventListener("focus", function () {
+            this.blur(); // Remove focus from the element
+        });
+    });
+
     $("[data-persian]").each(function () {
         $(this).pDatepicker({ initialValue:false, format: 'YYYY/MM/DD', autoClose: true})
     });
@@ -359,8 +388,29 @@ document.addEventListener("DOMContentLoaded", function () {
         $(this).pDatepicker({ initialValue:true, format: 'YYYY/MM/DD', autoClose: true})
     });
 
-    $("[data-time-picker]").each(function () {
-        $(this).pDatepicker({onlyTimePicker:true, initialValue:false, format: 'HH:mm', autoClose: true})
+    $("[data-picker]").each(function () {
+
+        let picker = $(this).data('picker');
+        let initialValue = $(this).data('picker-init') !== undefined;
+
+        if (picker === 'date') {
+            $(this).pDatepicker({ initialValue:initialValue, format: 'YYYY/MM/DD', autoClose: true})
+        }
+
+        if (picker === 'time') {
+            $(this).pDatepicker({onlyTimePicker:true, initialValue:initialValue, format: 'HH:mm', autoClose: true})
+        }
+
+        if (picker === 'datetime') {
+            $(this).pDatepicker({
+                timePicker: true,  // Enable time picker
+                format: 'YYYY-MM-DD HH:mm', // Format for both date and time
+                altFormat: 'YYYY-MM-DD HH:mm', // Format for the alternative field
+                autoClose: true,
+                initialValue:initialValue
+            });
+        }
+
     });
 
     $('.select2').each(function () {
