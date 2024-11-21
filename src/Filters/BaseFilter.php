@@ -1,79 +1,107 @@
 <?php
 
-    namespace iranapp\Tools\Filters;
+	namespace iranapp\Tools\Filters;
 
-    use Illuminate\Database\Eloquent\Builder;
-    use Illuminate\Support\Arr;
-    use Illuminate\Support\Str;
+	use Illuminate\Database\Eloquent\Builder;
+	use Illuminate\Support\Arr;
+	use Illuminate\Support\Str;
+	abstract class BaseFilter
+	{
+		/**
+		 * @var
+		 */
+		private $filters;
+		/**
+		 * @var
+		 */
+		protected $query;
 
-    abstract class BaseFilter {
+		/**
+		 * BaseCriteria constructor.
+		 *
+		 * @param Builder $query
+		 * @param array $filters
+		 */
+		public function __construct( $query, array $filters)
+		{
+			$this->filters = $filters;
+			$this->query = $query;
+		}
 
-        /**
-         * @var
-         */
-        protected $query;
-        /**
-         * @var
-         */
-        private $filters;
+		/**
+		 * @param $column_name
+		 * @param $value
+		 * @return Builder
+		 */
+		public abstract function default($column_name, $value): Builder;
 
-        /**
-         * BaseCriteria constructor.
-         *
-         * @param Builder $query
-         * @param array $filters
-         */
-        public function __construct($query, array $filters) {
-            $this->filters = $filters;
-            $this->query = $query;
-        }
+		/**
+		 * @return Builder
+		 */
+		public function apply()
+		{
 
-        /**
-         * @return Builder
-         */
-        public function apply() {
-            foreach ($this->filters as $filter => $value) {
-                if ($this->isFilterApplicable($filter)) {
-                    $this->query = call_user_func_array([$this, $this->getFilterMethodName($filter)], [$value]);
-                }
-            }
+			foreach ($this->filters as $filter => $value) {
 
-            return $this->query;
-        }
+				if ($this->isFilterApplicable($filter)) {
+					$this->query = call_user_func_array([$this, $this->getFilterMethodName($filter)], [$value]);
 
-        /**
-         * @param string $filter
-         *
-         * @return bool
-         */
-        private function isFilterApplicable(string $filter): bool {
+				} else {
+					if (method_exists($this, 'default')) {
 
-            if (Arr::get($this->filters, $filter) == '') {
-                return false;
-            }
+						if (preg_match('|^.{4}/.{1,2}/.{1,2}$|',$value)) {
+							$value = conversion()->gregorian($value);
+						}
 
-            return $this->hasSuitableFilterMethod($filter);
+						if ($value == 'true' || $value == 'false')
+							$value = filter_var($value,FILTER_VALIDATE_BOOLEAN);
 
-        }
+						$this->query = call_user_func_array([$this, 'default'], ['key' => $filter,'value' => $value]);
 
-        /**
-         * @param string $filter
-         *
-         * @return bool
-         */
-        private function hasSuitableFilterMethod(string $filter): bool {
-            $methodName = $this->getFilterMethodName($filter);
+					}
+				}
+
+			}
+
+			return $this->query;
+		}
+
+		/**
+		 * @param string $filter
+		 *
+		 * @return bool
+		 */
+		private function isFilterApplicable(string $filter): bool
+		{
+
+			if (empty(Arr::get($this->filters, $filter))) {
+
+				return false;
+			}
+
+			return $this->hasSuitableFilterMethod($filter);
+		}
+
+		/**
+		 * @param string $filter
+		 *
+		 * @return bool
+		 */
+		private function hasSuitableFilterMethod(string $filter): bool
+		{
+			$methodName = $this->getFilterMethodName($filter);
 
 
-            return method_exists($this, $methodName);
-        }
+			return method_exists($this, $methodName);
+		}
 
-        /**
-         * @param string $filter
-         *
-         * @return string
-         */
-        private function getFilterMethodName(string $filter): string {
-            return Str::camel($filter);
-        }
-    }
+		/**
+		 * @param string $filter
+		 *
+		 * @return string
+		 */
+		private function getFilterMethodName(string $filter): string
+		{
+			return Str::camel($filter);
+		}
+	}
