@@ -27,6 +27,8 @@
  * [data-picker] => date,time,datetime , use data-picker-init for use initialValue for picker
  * .select2 => data-select2-modal for set parent modal, data-select2-tag is tag, data-select2-placeholder is placeholder
  * data-select2-ajax is ajax request contain url for fetch
+ * select[data-show] => show tags depend on select tag
+ * for parent area, set data-show-child-id to data-show and for special tag in parent, set data-show-child-value to select value
  */
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -160,6 +162,16 @@ document.addEventListener("DOMContentLoaded", function () {
     $(`[data-slug]`).on('focusout', function () {
         let id = $(this).data('slug');
         $(`#${id}`).val(toSlug($(this).val()));
+    });
+
+    $("select[data-show]").change(function () {
+
+        let val = $(this).val();
+        let id = $(this).data('show');
+
+        $(`[data-show-child-id=${id}]`).hide();
+        $(`[data-show-child-id=${id}][data-show-child-value=${val}]`).show();
+
     });
 
     /*
