@@ -87,5 +87,18 @@
 				return "<?php echo isActiveRoute($str[0],$str[1]); ?>";
 			});
 
+			// Start the loop and expose breadcrumb properties
+			Blade::directive('Breadcrumbs', function () {
+				return '<?php foreach (iranapp\Tools\Services\BreadcrumbService::Get() as $breadcrumb): ' .
+					' $title = $breadcrumb->title; ' .
+					' $url = $breadcrumb->url; ' .
+					' $active = $breadcrumb->active; ?>';
+			});
+
+			// End the loop
+			Blade::directive('endBreadcrumbs', function () {
+				return '<?php endforeach; ?>';
+			});
+
         }
     }
