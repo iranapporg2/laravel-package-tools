@@ -72,3 +72,32 @@
         }
 
     }
+
+	class SmsPacket {
+
+		private $to, $body, $parameters, $template_id;
+
+		public function __construct($to, $body, $parameters, $template_id) {
+			$this->to = $to;
+			$this->body = $body;
+			$this->parameters = $parameters;
+			$this->template_id = $template_id;
+		}
+
+		public function getMobile() {
+			return $this->to;
+		}
+
+		public function getBody() {
+			return $this->body;
+		}
+
+		public function getParameters() {
+			return $this->parameters;
+		}
+
+		public function getTemplateId() {
+			return $this->template_id;
+		}
+
+	}
