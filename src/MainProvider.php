@@ -15,7 +15,7 @@
 
 			$this->publishes([
 				__DIR__.'/other/config' => config_path(),
-			],'laravel-assets');
+			],'iranapp');
 
 			$this->publishes([
 				__DIR__.'/View/Components' => base_path('app/View/Components'),
@@ -23,7 +23,7 @@
 
 			$this->publishes([
 				__DIR__.'/other/database/migrations'  => database_path('laravel-assets'),
-			],'laravel-assets');
+			],'iranapp');
 
 			//use it like {{ __('iranapp::messages.key') }}
 			//$this->loadTranslationsFrom(__DIR__.'/other/lang/fa', 'iranapp');
