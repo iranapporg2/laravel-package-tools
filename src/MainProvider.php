@@ -4,10 +4,12 @@
 	namespace iranapp\Tools;
 
 	use Illuminate\Foundation\Http\Kernel;
+	use Illuminate\Support\Facades\Redirect;
 	use Illuminate\Support\Facades\Route;
 	use Illuminate\Support\Facades\Schema;
 	use Illuminate\Support\ServiceProvider;
 	use iranapp\Tools\Middlewares\SanitizeMiddleware;
+	use iranapp\Tools\Responses\CustomRedirectResponse;
 
 	class MainProvider extends ServiceProvider {
 
@@ -46,6 +48,14 @@
 
 			$kernel = $this->app->make(Kernel::class);
 			//$kernel->prependMiddlewareToGroup('web', SanitizeMiddleware::class);
+
+			Redirect::macro('notify', function ($route, ...$parameters) {
+				return new CustomRedirectResponse(route($route, ...$parameters));
+			});
+
+			$router = $this->app['router'];
+			$router->aliasMiddleware('sanitize', SanitizeMiddleware::class);
+			$router->aliasMiddleware('allowedQuery', SanitizeMiddleware::class);
 
 		}
 

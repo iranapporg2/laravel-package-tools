@@ -20,18 +20,14 @@
 
             foreach ($variables as $variable => $temp) {
 
-                if (Str::length($temp) < 50) {
+				$temp = conversion()->sanitize($temp);
 
-                    $temp = conversion()->santinize($temp);
+				if (preg_match('|^\d{4}/\d{1,2}/\d{1,2}$|', $temp))
+					$temp = conversion()->gregorian($temp);
 
-                    if (preg_match('|^\d{4}/\d{1,2}/\d{1,2}$|', $temp))
-                        $temp = conversion()->gregorian($temp);
-
-                    $request->merge([
-                        $variable => $temp
-                    ]);
-
-                }
+				$request->merge([
+					$variable => $temp
+				]);
 
             }
 
