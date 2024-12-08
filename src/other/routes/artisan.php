@@ -27,14 +27,32 @@
 		});
 	});
 
-	Route::get('my.js', function () {
-		$path = base_path('vendor/iranapp/tools/src/other/public/asset/my.js');;
-		if (file_exists($path)) {
-			return response()->file($path, [
-				'Content-Type' => 'application/javascript'
-			]);
+	Route::get('my.js', function (Request $request) {
+		$path = base_path('vendor/iranapp/tools/src/other/public/asset/my.js');
+
+		if (!file_exists($path)) {
+			abort(404);
 		}
-		abort(404);
+
+		$lastModifiedTime = filemtime($path); // Get the file's last modification time
+		$etag = md5_file($path); // Generate an ETag based on the file's content
+
+		// Check if the client's cache is still valid
+		if ($request->headers->has('If-Modified-Since') || $request->headers->has('If-None-Match')) {
+			$ifModifiedSince = $request->headers->get('If-Modified-Since');
+			$ifNoneMatch = $request->headers->get('If-None-Match');
+
+			if ($ifModifiedSince && strtotime($ifModifiedSince) >= $lastModifiedTime && $ifNoneMatch === $etag) {
+				return response('', 304); // Not Modified
+			}
+		}
+
+		return Response::file($path, [
+			'Content-Type' => 'application/javascript',
+		])
+			->setLastModified(new DateTime("@$lastModifiedTime"))
+			->setEtag($etag)
+			->setCache(['public' => true, 'max_age' => 3600, 'must_revalidate' => true]);
 	});
 
 	Route::get('edit', function (Request $request) {
