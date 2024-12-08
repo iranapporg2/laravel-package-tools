@@ -219,9 +219,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    $("form").filter(function () {
-        return $(this).find('input[name=_method]').val() == 'DELETE';
-    }).submit(function (e) {
+    $(document).on('submit', "form", function (e) {
+        // Check if the form has the DELETE method
+        if ($(this).find('input[name=_method]').val() !== 'DELETE') {
+            return; // Ignore other forms
+        }
 
         e.preventDefault();
 
@@ -233,13 +235,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 cancelButton: 'btn btn-danger me-2'
             },
             buttonsStyling: false,
-        })
+        });
 
         let message = $(this).data('question');
 
         let config = {
             title: 'دقت کنید',
-            html: message != '' ? message : "آیا مطمئن به انجام این عملیات هستید؟",
+            html: message !== '' ? message : "آیا مطمئن به انجام این عملیات هستید؟",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonClass: 'me-2',
@@ -259,8 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 me[0].submit();
             }
         });
-
-    })
+    });
 
     /**
      * add data-prompt for question text
