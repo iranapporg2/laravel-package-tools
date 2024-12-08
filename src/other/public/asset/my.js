@@ -219,6 +219,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    $("form").filter(function () {
+        return $(this).find('input[name=_method]').val() == 'DELETE';
+    }).submit(function (e) {
+
+        e.preventDefault();
+
+        var me = $(this);
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger me-2'
+            },
+            buttonsStyling: false,
+        })
+
+        let message = $(this).data('question');
+
+        let config = {
+            title: 'دقت کنید',
+            html: message != '' ? message : "آیا مطمئن به انجام این عملیات هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'me-2',
+            confirmButtonText: 'بله، انجام شود',
+            cancelButtonText: 'منصرف شدم',
+            reverseButtons: true
+        };
+
+        if (typeof $(this).data('prompt') !== 'undefined') {
+            config.input = 'text';
+            config.inputPlaceholder = $(this).data('prompt');
+        }
+
+        swalWithBootstrapButtons.fire(config).then((result) => {
+            if (result.value !== "undefined" && result.value !== undefined) {
+                me.off('submit'); // Temporarily remove the submit event handler
+                me[0].submit();
+            }
+        });
+
+    })
+
     /**
      * add data-prompt for question text
      */
