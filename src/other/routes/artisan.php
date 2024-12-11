@@ -1,6 +1,7 @@
 <?php
 
 	use Illuminate\Support\Facades\Route;
+	use Illuminate\Http\Request;
 
 	Route::prefix('artisan/')->group(function () {
 		Route::get('/link', function () {
