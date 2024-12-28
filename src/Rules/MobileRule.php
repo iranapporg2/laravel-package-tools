@@ -18,7 +18,7 @@
 		{
 			$value = conversion()->sanitize($value);
 			if (!preg_match('/^09[0-9]{9}$/', $value)) {
-				$fail(trans('validation.in',trans('custom.mobile')));
+				$fail(trans('validation.in',[trans('custom.mobile')]));
 			}
 		}
 	}

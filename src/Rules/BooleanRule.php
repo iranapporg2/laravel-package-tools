@@ -18,6 +18,6 @@
 		{
 			$value = conversion()->sanitize($value);
 			if (!in_array($value,['0','1','false','true']))
-				$fail(trans('validation.in',trans('custom.value')));
+				$fail(trans('validation.in',[trans('custom.value')]));
 		}
 	}

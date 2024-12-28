@@ -17,6 +17,6 @@
 		public function validate(string $attribute, mixed $value, \Closure $fail): void {
 			$value = conversion()->sanitize($value);
 			if (!preg_match('/^\d{4}/\d{1,2}/\d{1,2}$/', $value))
-				$fail(trans('validation.in', trans('custom.date')));
+				$fail(trans('validation.in', [trans('custom.date')]));
 		}
 	}
