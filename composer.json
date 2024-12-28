@@ -25,7 +25,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "iranapp\\Tools\\MainProvider"
+                "iranapp\\Tools\\MainProvider",
+                "iranapp\\Tools\\Provider\\GenericBladeServiceProvider"
             ]
         }
     }
