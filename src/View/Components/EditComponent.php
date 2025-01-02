@@ -8,15 +8,14 @@
 
     class EditComponent extends Component {
 
-        public $id,$key,$title,$model,$value;
+        public $id,$key,$model,$value;
 
         /**
          * Create a new component instance.
          */
-        public function __construct($id,$key,$title,$model,$value) {
+        public function __construct($id,$key,$model,$value) {
             $this->id = $id;
             $this->key = $key;
-            $this->title = $title;
             $this->model = $model;
             $this->value = $value;
         }

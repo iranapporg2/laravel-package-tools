@@ -56,12 +56,12 @@
 			->setCache(['public' => true, 'max_age' => 3600, 'must_revalidate' => true]);
 	});
 
-	Route::get('edit', function (Request $request) {
+	Route::post('edit', function (Request $request) {
 
 		$id = $request->id;
 		$key = $request->key;
 		$val = $request->value;
-		$model = $request->model;
+		$model = ucfirst($request->model);
 
 		$model = app('App\\Models\\'.$model);
 		$model = $model->find($id);
