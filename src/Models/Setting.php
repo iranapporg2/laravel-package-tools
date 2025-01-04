@@ -11,21 +11,21 @@
 
 		protected static function booted() {
 
-			self::updated(function ($item) {
+			self::updated(function () {
 				\Cache::delete('settings');
 			});
 
-			self::deleted(function ($item) {
+			self::deleted(function () {
 				\Cache::delete('settings');
 			});
 
-			self::created(function ($item) {
+			self::created(function () {
 				\Cache::delete('settings');
 			});
 
 		}
 
-		public static function getValue($key,$default = null) {
+		public static function Fetch($key,$default = null) {
 
 			$all = null;
 
