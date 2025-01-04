@@ -61,7 +61,7 @@
             });
 
             Blade::directive('Setting',function ($key) {
-                return "<?php echo App\Models\Setting::Fetch($key); ?>";
+                return "<?php echo iranapp\Tools\Models\Setting::Fetch($key); ?>";
             });
 
 			Blade::directive('Library',function ($name) {
