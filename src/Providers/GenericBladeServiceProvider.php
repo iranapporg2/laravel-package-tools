@@ -25,12 +25,20 @@
 				return "<?php echo request($str); ?>";
 			});
 
-            Blade::directive('Currency',function ($str) {
-				$str = explode(',',$str);
-				if (count($str) == 1)
-					$str[] = "";
-                return "<?php echo number_format($str[0],0).' '.$str[1] ?>";
-            });
+			Blade::directive('Currency', function ($expression) {
+				// Parse the expression into its components
+				$parts = explode(',', $expression);
+
+				// Ensure we have at least two parts (value and currency)
+				$value = trim($parts[0]);
+				$currency = isset($parts[1]) ? trim($parts[1]) : '';
+
+				// Check if a third parameter (fallback) exists
+				$fallback = isset($parts[2]) ? trim($parts[2]) : null;
+
+				// Generate the PHP code to be executed
+				return "<?php echo ($value == 0 && $fallback !== null) ? $fallback : number_format($value, 0) . ' ' . $currency; ?>";
+			});
 
             Blade::directive('Status',function ($str) {
                 return "<?php
