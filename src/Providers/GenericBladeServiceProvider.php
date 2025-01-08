@@ -26,7 +26,10 @@
 			});
 
             Blade::directive('Currency',function ($str) {
-                return "<?php echo number_format($str,0); ?>";
+				$str = explode(',',$str);
+				if (count($str) == 1)
+					$str[] = "";
+                return "<?php echo number_format($str[0],0).' '.$str[1] ?>";
             });
 
             Blade::directive('Status',function ($str) {
