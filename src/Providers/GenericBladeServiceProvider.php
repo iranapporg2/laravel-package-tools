@@ -2,8 +2,6 @@
 
     namespace iranapp\Tools\Providers;
 
-    use App\Enums\GenderEnum;
-    use App\Enums\StateEnum;
     use Illuminate\Support\Facades\Blade;
     use Illuminate\Support\Facades\Storage;
     use Illuminate\Support\ServiceProvider;
@@ -42,13 +40,13 @@
 
             Blade::directive('Status',function ($str) {
                 return "<?php
-                echo App\Enums\StateEnum::title($str);
+                echo iranapp\Tools\Enums\StateEnum::title($str);
                 ?>";
             });
 
             Blade::directive('Gender',function ($gender) {
                 return "<?php
-                    echo App\Enums\GenderEnum::title($gender);
+                    echo iranapp\Tools\Enums\GenderEnum::title($gender);
                 ?>";
 
             });
