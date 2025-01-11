@@ -29,7 +29,7 @@
 
 			throw new HttpResponseException(response()->json([
 				'status' => false,
-				'message' => ['validation' => $validator->errors()->all()],
+				'message' => $validator->errors()->all()
 			]));
 
 		}
