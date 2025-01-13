@@ -67,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
      * add hidden input named _token for csrf
      *
      */
-    $('form[data-ajax]').submit(function (e) {
+
+    $(document).on('submit', 'form[data-ajax]', function (e) {
         e.preventDefault();
 
         let btn = $(this).find('[type=submit]');
