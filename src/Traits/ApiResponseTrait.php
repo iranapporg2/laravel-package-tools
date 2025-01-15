@@ -25,6 +25,13 @@
 
 		}
 
+		/**
+		 * according to crud actions, if user try add new item, this function return true
+		 */
+		public function isCreateRequest(): bool {
+			return request()->isMethod('POST');
+		}
+
 		public function failedValidation(Validator $validator) {
 
 			throw new HttpResponseException(response()->json([

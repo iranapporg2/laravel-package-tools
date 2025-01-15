@@ -68,6 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
      *
      */
 
+    $(document).on('click', 'a[data-form]', function (e) {
+        e.preventDefault();
+        $($(this).data('form')).submit();
+    });
+
     $(document).on('submit', 'form[data-ajax]', function (e) {
         e.preventDefault();
 
@@ -89,11 +94,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!msg.status) {
                     notify(msg.message, 'error');
                 } else {
-                    notify(msg.message, 'success');
-                    if (msg.data.redirect !== undefined)
-                        setTimeout(function () {
-                            location.href = msg.data.redirect;
-                        }, 500);
+                    if (msg.data.redirect !== undefined) {
+
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                                cancelButton: 'btn btn-danger me-2'
+                            },
+                            buttonsStyling: false,
+                        });
+
+                        let config = {
+                            title: '',
+                            html: msg.message,
+                            icon: 'info',
+                            confirmButtonClass: 'me-2',
+                            confirmButtonText: 'با تشکر',
+                            reverseButtons: true
+                        };
+
+                        swalWithBootstrapButtons.fire(config).then((result) => {
+                            if (result.value !== "undefined" && result.value !== undefined) {
+                                if (msg.data.redirect !== undefined) {
+                                    location.href = msg.data.redirect;
+                                }
+                            }
+                        });
+                    }
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
