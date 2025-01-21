@@ -33,7 +33,7 @@
 		 * @param $value
 		 * @return Builder
 		 */
-		public abstract function default($column_name, $value): Builder;
+		public abstract function default($column_name, $value);
 
 		/**
 		 * @return Builder
@@ -43,11 +43,11 @@
 
 			foreach ($this->filters as $filter => $value) {
 
-				if ($this->isFilterApplicable($filter)) {
+				if ($this->isFilterApplicable($filter) && $value != '') {
 					$this->query = call_user_func_array([$this, $this->getFilterMethodName($filter)], [$value]);
 
 				} else {
-					if (method_exists($this, 'default')) {
+					if (method_exists($this, 'default') && $value != '') {
 
 						if (preg_match('|^.{4}/.{1,2}/.{1,2}$|',$value)) {
 							$value = conversion()->gregorian($value);

@@ -27,10 +27,8 @@
 
 		public static function Fetch($key,$default = null) {
 
-			$all = null;
-
-			\Cache::remember('settings',86400,function () use (&$all) {
-				$all = Setting::pluck('value','key')->all();
+			$all = \Cache::remember('settings',86400,function () use (&$all) {
+				return Setting::pluck('value','key')->all();
 			});
 
 			if (!isset($all[$key])) return $default;

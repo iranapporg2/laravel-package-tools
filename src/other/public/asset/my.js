@@ -32,13 +32,35 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
 
-    $("a[data-modal]").click(function (e) {
+    $("[data-modal]").click(function (e) {
         e.preventDefault();
 
         let modal_id = $(this).data('modal');
-        $(`#${modal_id}`).find('.modal-body').html('در حال بارگزاری...');
-        $(`#${modal_id}`).find('.modal-body').load($(this).attr('href'));
-        $(`#${modal_id}`).modal('show');
+        if ($(this).data('modal-text') === undefined) {
+            $(`#${modal_id}`).find('.modal-body').html('در حال بارگزاری...');
+            $(`#${modal_id}`).find('.modal-body').load($(this).attr('href'));
+            $(`#${modal_id}`).modal('show');
+        } else {
+            $(`#${modal_id}`).find('.modal-body').html($(this).data('modal-text'));
+            $(`#${modal_id}`).modal('show');
+        }
+
+    });
+
+    $("[data-toggle-checkbox],input[data-id][type='checkbox']").change(function () {
+
+        var input_id;
+
+        if ($(this).data('toggle-checkbox') !== undefined) {
+            $(`input[data-id][type=checkbox]`).prop('checked', this.checked)
+            input_id = $("#"+$(this).data('toggle-checkbox'));
+        } else {
+            input_id = $("#"+$(this).data('parent-id'));
+        }
+
+        let selected_id = $(`[data-id]:checked`).map((index,element) => element.value).get();
+
+        input_id.val(selected_id);
 
     });
 
@@ -131,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    $("form").on('submit', function () {
+    $(document).on('submit', 'form', function (e) {
         $(this).find('[type=submit]').each(function () {
             let message = $(this).data('text') || 'در حال پردازش...';
             $(this).text(message);
