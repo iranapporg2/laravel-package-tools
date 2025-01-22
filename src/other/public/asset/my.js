@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
      *
      */
 
-    $(document).on('click', 'a[data-form]', function (e) {
+    $(document).on('click', '[data-form]', function (e) {
         e.preventDefault();
         $($(this).data('form')).submit();
     });
