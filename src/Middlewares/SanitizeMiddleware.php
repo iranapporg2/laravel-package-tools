@@ -17,6 +17,8 @@
 			// Get all request variables
 			$variables = $request->all();
 
+			if (count($fields) == 0) $fields = array_keys($variables);
+
 			foreach ($variables as $variable => $temp) {
 				// If no fields specified, sanitize all; otherwise, only sanitize specified fields
 				if (in_array($variable, $fields)) {
