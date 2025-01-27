@@ -19,7 +19,7 @@
 
 			foreach ($variables as $variable => $temp) {
 				// If no fields specified, sanitize all; otherwise, only sanitize specified fields
-				if (empty($fields) || in_array($variable, $fields)) {
+				if (in_array($variable, $fields)) {
 					$temp = conversion()->sanitize($temp);
 
 					// Check if the variable is a date and convert if necessary
