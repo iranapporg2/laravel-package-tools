@@ -25,9 +25,10 @@
 				if (!empty($temp) && in_array($variable, $fields)) {
 					$temp = conversion()->sanitize($temp);
 
-					// Check if the variable is a date and convert if necessary
-					if (preg_match('|^\d{4}/\d{1,2}/\d{1,2}$|', $temp)) {
-						$temp = conversion()->gregorian($temp);
+					if (!is_array($temp)) {
+						if (preg_match('|^\d{4}/\d{1,2}/\d{1,2}$|', $temp)) {
+							$temp = conversion()->gregorian($temp);
+						}
 					}
 
 					// Merge sanitized value back into the request
