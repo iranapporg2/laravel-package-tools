@@ -30,7 +30,20 @@
  * select[data-show] => show tags depend on select tag
  * for parent area, set data-show-child-id to data-show and for special tag in parent, set data-show-child-value to select value
  */
+
+var form_ajax = false;
+
 document.addEventListener("DOMContentLoaded", function () {
+    updateTags(document);
+});
+
+$(document).on('shown.bs.modal', '.modal', function (event) {
+    setTimeout(function () {
+        updateTags(event.target);
+    }, 300); // 100ms delay
+});
+
+function updateTags(context) {
 
     $("[data-modal]").click(function (e) {
         e.preventDefault();
@@ -90,13 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
      *
      */
 
-    $(document).on('click', '[data-form]', function (e) {
+    $(context).on('click', 'a[data-form]', function (e) {
         e.preventDefault();
         $($(this).data('form')).submit();
     });
 
-    $(document).on('submit', 'form[data-ajax]', function (e) {
+    $(context).on('submit', 'form[data-ajax]', function (e) {
         e.preventDefault();
+
+        if (form_ajax) return;
+
+        form_ajax = true;
 
         let btn = $(this).find('[type=submit]');
         btn.text('در حال پردازش...');
@@ -113,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
             processData: false, // Prevent jQuery from automatically transforming the data into a query string
             contentType: false, // Let the browser set the content type, including boundaries for file uploads
             success: function (msg) {
+                form_ajax = false;
                 if (!msg.status) {
                     notify(msg.message, 'error');
                 } else {
@@ -146,17 +164,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                form_ajax = false;
                 notify(textStatus, 'error');
             }
         }).always(function () {
+            form_ajax = false;
             btn.text('ذخیره تغییرات');
-        });
-    });
-
-    $(document).on('submit', 'form', function (e) {
-        $(this).find('[type=submit]').each(function () {
-            let message = $(this).data('text') || 'در حال پردازش...';
-            $(this).text(message);
         });
     });
 
@@ -220,7 +233,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let id = $(this).data('show');
 
         $(`[data-show-child-id=${id}]`).hide();
+        $(`[data-show-child-id=${id}]`).addClass('d-none');
         $(`[data-show-child-id=${id}][data-show-child-value=${val}]`).show();
+        $(`[data-show-child-id=${id}][data-show-child-value=${val}]`).toggleClass('d-none');
 
     });
 
@@ -269,12 +284,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    $(document).on('submit', "form", function (e) {
+    $(context).on('submit', 'form', function (e) {
+        $(this).find('[type=submit]').each(function () {
+            let message = $(this).data('text') || 'در حال پردازش...';
+            $(this).text(message);
+        });
+    });
+
+    $(context).on('submit', "form", function (e) {
         // Check if the form has the DELETE method
-        if ($(this).find('input[name=_method]').val() !== 'DELETE') {
+        if ($(this).find('input[name=_method]').val() !== 'DELETE' || $(this).data('ajax') !== undefined) {
             return; // Ignore other forms
         }
-
         e.preventDefault();
 
         var me = $(this);
@@ -479,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    const elements = document.querySelectorAll("[data-persian],[data-time-picker],[data-picker]");
+    const elements = context.querySelectorAll("[data-persian],[data-time-picker],[data-picker]");
     elements.forEach(element => {
         element.addEventListener("focus", function () {
             this.blur(); // Remove focus from the element
@@ -494,7 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $(this).pDatepicker({ initialValue:true, format: 'YYYY/MM/DD', autoClose: true})
     });
 
-    $("[data-picker]").each(function () {
+    $(context).find("[data-picker]").each(function () {
 
         let picker = $(this).data('picker');
         let initialValue = $(this).data('picker-init') !== undefined;
@@ -519,16 +540,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    $('.select2').each(function () {
+    $(context).find('.select2').each(function () {
         var option = {};
 
         var selectHeight = $(this).css('height');
-        if (selectHeight) {
-            option.dropdownCss = {
-                height: selectHeight,
-                'line-height': selectHeight
-            };
-        }
 
         // Set the dropdown parent if data-select2-modal is specified
         if ($(this).data('select2-modal') !== undefined) {
@@ -587,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-});
+}
 
 function notify(text, type) {
 
