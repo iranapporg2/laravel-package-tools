@@ -5,6 +5,7 @@
 	use Closure;
 	use Illuminate\Http\Request;
 	use Symfony\Component\HttpFoundation\Response;
+	use function React\Promise\all;
 
 	class SanitizeMiddleware {
 		/**
@@ -21,7 +22,7 @@
 
 			foreach ($variables as $variable => $temp) {
 				// If no fields specified, sanitize all; otherwise, only sanitize specified fields
-				if (in_array($variable, $fields)) {
+				if (!empty($temp) && in_array($variable, $fields)) {
 					$temp = conversion()->sanitize($temp);
 
 					// Check if the variable is a date and convert if necessary
