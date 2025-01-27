@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Rules;
+	namespace iranapp\Tools\Rules;
 
     use Illuminate\Contracts\Validation\ValidationRule;
     use Closure;
