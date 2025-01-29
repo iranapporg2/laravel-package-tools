@@ -175,6 +175,8 @@ function updateTags(context) {
 
     //convert number to currency on input
     $("input[data-price]").on('input keyup', function () {
+        if (!/^\d+$/.test($(this).val()))
+            $(this).val($(this).val().replace(/\D/g, ''));
         $(this).val(toCurrency($(this).val()));
     });
 

