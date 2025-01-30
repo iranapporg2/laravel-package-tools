@@ -20,10 +20,14 @@
 
 		public function failedValidation(Validator $validator) {
 
-			throw new HttpResponseException(response()->json([
-				'status' => false,
-				'message' => implode('<br>',$validator->errors()->all())
-			]));
+			if (request()->ajax()) {
+				throw new HttpResponseException(response()->json([
+					'status' => false,
+					'message' => implode('<br>', $validator->errors()->all())
+				]));
+			}
+
+			parent::failedValidation($validator);
 
 		}
 
