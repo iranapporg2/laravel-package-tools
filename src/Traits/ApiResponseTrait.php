@@ -32,6 +32,10 @@
 			return request()->isMethod('POST');
 		}
 
+		protected function prepareForValidation() {
+			request()->request->add(['is_create' => $this->isCreateRequest()]);
+		}
+
 		public function failedValidation(Validator $validator) {
 
 			throw new HttpResponseException(response()->json([
