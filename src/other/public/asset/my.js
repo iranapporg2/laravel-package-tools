@@ -32,6 +32,7 @@
  */
 
 var form_ajax = false;
+var modal_ajax = false;
 
 document.addEventListener("DOMContentLoaded", function () {
     updateTags(document);
@@ -48,13 +49,20 @@ function updateTags(context) {
     $("[data-modal]").click(function (e) {
         e.preventDefault();
 
+        if (modal_ajax) return;
+        modal_ajax = true;
+
         let modal_id = $(this).data('modal');
         if ($(this).data('modal-text') === undefined) {
             $(`#${modal_id}`).find('.modal-body').html('در حال بارگزاری...');
-            $(`#${modal_id}`).find('.modal-body').load($(this).attr('href'));
+            $(`#${modal_id}`).find('.modal-body').load($(this).attr('href'),function () {
+                modal_ajax = false;
+            });
             $(`#${modal_id}`).modal('show');
         } else {
-            $(`#${modal_id}`).find('.modal-body').html($(this).data('modal-text'));
+            $(`#${modal_id}`).find('.modal-body').html($(this).data('modal-text'),function () {
+                modal_ajax = false;
+            });
             $(`#${modal_id}`).modal('show');
         }
 
