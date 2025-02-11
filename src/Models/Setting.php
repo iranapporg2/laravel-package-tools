@@ -21,7 +21,7 @@
 
 			if (!isset($all[$key])) return $default;
 
-			return $all[$key]['value'];
+			return $all[$key];
 
 		}
 
