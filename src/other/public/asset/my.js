@@ -49,8 +49,10 @@ function updateTags(context) {
     $("[data-modal]").click(function (e) {
         e.preventDefault();
 
-        if (modal_ajax) return;
-        modal_ajax = true;
+        if ($(this).data('modal-text') === undefined) {
+            if (modal_ajax) return;
+            modal_ajax = true;
+        }
 
         let modal_id = $(this).data('modal');
         if ($(this).data('modal-text') === undefined) {

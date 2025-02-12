@@ -98,10 +98,19 @@
 			});
 
 			Blade::directive('isActiveRoute',function ($arg) {
+
 				$str = explode(',',$arg);
-				if (count($str) == 1)
+				if (count($str) == 1) {
 					$str[] = '';
-				return "<?php echo isActiveRoute($str[0],$str[1]); ?>";
+					$str[] = '[]';
+				}
+				if (count($str) == 2) {
+					$str[] = '[]';
+				}
+
+				$str[2] = json_encode($str[2]);
+
+				return "<?php echo isActiveRoute($str[0],$str[1],$str[2]); ?>";
 			});
 
 			Blade::directive('NotifyData',function ($arg) {
