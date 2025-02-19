@@ -545,8 +545,8 @@ function updateTags(context) {
                 timePicker: {
                     enabled: true
                 },  // Enable time picker
-                format: 'YYYY-MM-DD HH:mm', // Format for both date and time
-                altFormat: 'YYYY-MM-DD HH:mm', // Format for the alternative field
+                format: 'YYYY/MM/DD HH:mm', // Format for both date and time
+                altFormat: 'YYYY/MM/DD HH:mm', // Format for the alternative field
                 autoClose: true,
                 initialValue:initialValue
             });
