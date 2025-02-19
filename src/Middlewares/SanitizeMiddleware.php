@@ -29,6 +29,12 @@
 						if (preg_match('|^\d{4}/\d{1,2}/\d{1,2}$|', $temp)) {
 							$temp = conversion()->gregorian($temp);
 						}
+						if (preg_match('|^\d{4}/\d{1,2}/\d{1,2} \d{1,2}:\d{1,2}$|', $temp)) {
+							$temp = conversion()->gregorian($temp).' '.explode(' ',$temp)[1];
+						}
+						if (preg_match('|^\d{4}/\d{1,2}/\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}$|', $temp)) {
+							$temp = conversion()->gregorian($temp).' '.explode(' ',$temp)[1];
+						}
 					}
 
 					// Merge sanitized value back into the request
