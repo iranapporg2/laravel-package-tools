@@ -542,7 +542,9 @@ function updateTags(context) {
 
         if (picker === 'datetime') {
             $(this).pDatepicker({
-                timePicker: true,  // Enable time picker
+                timePicker: {
+                    enabled: true
+                },  // Enable time picker
                 format: 'YYYY-MM-DD HH:mm', // Format for both date and time
                 altFormat: 'YYYY-MM-DD HH:mm', // Format for the alternative field
                 autoClose: true,
