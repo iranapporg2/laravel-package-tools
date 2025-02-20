@@ -554,6 +554,33 @@ function updateTags(context) {
 
     });
 
+    /*public function search(Request $request) {
+
+        if (!$request->ajax()) {
+            return $this->json(false);
+        }
+
+        $search = $request->search;
+        $search_by = $request->search_by;
+        $return_field = $request->column;
+
+        $model = Str::camel($request->input('model'));
+        $modelClass = app('App\\Models\\' . $model);
+
+        $rows = $modelClass->where($search_by,'like','%'.$search.'%')->get();
+
+        $rows = $rows->map(function($row) use ($return_field) {
+            return [
+                'id' => $row->id,
+                'text' => $row[$return_field],
+        ];
+        });
+
+        return response()->json([
+            'items' => $rows
+        ]);
+
+    }*/
     $(context).find('.select2').each(function () {
         var option = {};
 
