@@ -27,20 +27,21 @@
 			Artisan::call('optimize');
 			return "Cache cleared successfully";
 		});
-	});
 
-	/**
-	 * #!/bin/sh
-	 * # Get the latest commit message
-	 * COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-	 *
-	 * # Send the commit message to the URL using POST
-	 * curl -X POST "https://DOMAIN/changelog" -d "changelog=$COMMIT_MESSAGE"
-	 */
-	Route::post('/artisan/changelog',function (Request $request){
-		 Changelog::create([
-			 'details' => $request->details,
-		 ]);
+		/**
+		 * #!/bin/sh
+		 * # Get the latest commit message
+		 * COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+		 *
+		 * # Send the commit message to the URL using POST
+		 * curl -X POST "https://DOMAIN/changelog" -d "changelog=$COMMIT_MESSAGE"
+		 */
+		Route::match(['get','post'],'/changelog',function (Request $request){
+			Changelog::create([
+				'details' => $request->details,
+			]);
+		});
+
 	});
 
 	Route::get('my.js', function (Request $request) {
