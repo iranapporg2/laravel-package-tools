@@ -30,16 +30,28 @@
 
 		/**
 		 * #!/bin/sh
-		 * # Get the latest commit message
-		 * COMMIT_MESSAGE=$(git log -1 --pretty=%B)
 		 *
-		 * # Send the commit message to the URL using POST
-		 * curl -X POST "https://DOMAIN/changelog" -d "changelog=$COMMIT_MESSAGE"
+		 * # Get the latest commit message (changelog) and the author
+		 * COMMIT_MESSAGE=$(git log -1 --format=%B)
+		 *
+		 * # Remove any "Signed-off-by" lines from the commit message
+		 * COMMIT_MESSAGE=$(echo "$COMMIT_MESSAGE" | sed '/^Signed-off-by:/d')
+		 * ENCODED_COMMIT_MESSAGE=$(echo -n "$COMMIT_MESSAGE" | base64)
+		 *
+		 * # Get the author
+		 * AUTHOR=$(git log -1 --format='%an')
+		 *
+		 * # Send the commit message and author to the URL using POST
+		 * curl -X POST "http://DOMAIN_OR_IP/artisan/changelog" \
+		 * -d "changelog=$ENCODED_COMMIT_MESSAGE" \
+		 * -d "author=$AUTHOR"
 		 */
 		Route::match(['get','post'],'/changelog',function (Request $request){
 			Changelog::create([
-				'details' => $request->details,
+				'details' => base64_decode($request->changelog),
+				'author' => $request->author,
 			]);
+			exit('done');
 		})->withoutMiddleware('web');
 
 	});
