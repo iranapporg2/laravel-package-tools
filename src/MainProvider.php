@@ -17,18 +17,18 @@
 
 			$this->publishes([
 				__DIR__.'/other/config' => config_path(),
-			],'iranapp');
+			],'iranapp-config');
 
 			$this->publishes([
-				__DIR__.'/other/database/migrations'  => database_path('laravel-assets'),
-			],'iranapp');
+				__DIR__.'/other/database/migrations'  => database_path('migrations'),
+			],'iranapp-migrations');
 
 			//use it like {{ __('iranapp::messages.key') }}
 			//$this->loadTranslationsFrom(__DIR__.'/other/lang/fa', 'iranapp');
 
 			$this->publishes([
 				__DIR__.'\other\resources' => base_path('resources'),
-			], 'laravel-assets');
+			], 'iranapp-resources');
 
 			/*$this->publishes([
 				__DIR__.'/../config/auth.php' => config_path('my_auth.php'),
