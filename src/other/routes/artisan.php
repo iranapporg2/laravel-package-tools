@@ -40,7 +40,7 @@
 			Changelog::create([
 				'details' => $request->details,
 			]);
-		});
+		})->withoutMiddleware('web');
 
 	});
 

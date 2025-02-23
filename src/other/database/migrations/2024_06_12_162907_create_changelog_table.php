@@ -10,7 +10,7 @@
          */
         public function up(): void {
 
-			Schema::create('changelog', function (Blueprint $table) {
+			Schema::create('changelogs', function (Blueprint $table) {
                 $table->id();
 				$table->string('author')->nullable();
 				$table->string('details')->nullable();
