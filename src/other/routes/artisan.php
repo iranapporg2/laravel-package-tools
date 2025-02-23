@@ -29,7 +29,15 @@
 		});
 	});
 
-	Route::post('changelog',function (Request $request){
+	/**
+	 * #!/bin/sh
+	 * # Get the latest commit message
+	 * COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+	 *
+	 * # Send the commit message to the URL using POST
+	 * curl -X POST "https://DOMAIN/changelog" -d "changelog=$COMMIT_MESSAGE"
+	 */
+	Route::post('/artisan/changelog',function (Request $request){
 		 Changelog::create([
 			 'details' => $request->details,
 		 ]);
