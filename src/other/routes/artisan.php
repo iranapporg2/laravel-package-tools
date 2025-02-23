@@ -2,6 +2,7 @@
 
 	use Illuminate\Support\Facades\Route;
 	use Illuminate\Http\Request;
+	use iranapp\Tools\Models\Changelog;
 
 	Route::prefix('artisan/')->group(function () {
 		Route::get('/link', function () {
@@ -26,6 +27,12 @@
 			Artisan::call('optimize');
 			return "Cache cleared successfully";
 		});
+	});
+
+	Route::post('changelog',function (Request $request){
+		 Changelog::create([
+			 'details' => $request->details,
+		 ]);
 	});
 
 	Route::get('my.js', function (Request $request) {
