@@ -23,9 +23,11 @@
 			foreach ($variables as $variable => $temp) {
 				// If no fields specified, sanitize all; otherwise, only sanitize specified fields
 				if (!empty($temp) && in_array($variable, $fields)) {
-					$temp = conversion()->sanitize($temp);
 
 					if (!is_array($temp)) {
+
+						$temp = conversion()->sanitize($temp);
+
 						if (preg_match('|^\d{4}/\d{1,2}/\d{1,2}$|', $temp)) {
 							$temp = conversion()->gregorian($temp);
 						}
