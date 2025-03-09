@@ -10,24 +10,28 @@
 		public $guarded = [];
 
 		public static function Clear() {
-			\Cache::delete('settings');
+			\Cache::delete('setting');
 		}
 
 		public static function Fetch($key,$default = null) {
 
-			$all = \Cache::remember('settings',86400,function () use (&$all) {
-				return Setting::pluck('value','key')->all();
+			$all = \Cache::remember('setting',86400,function () use (&$all) {
+				return Setting::get();
 			});
 
-			if (!isset($all[$key])) return $default;
+			foreach ($all as $setting) {
+				if ($setting->key == $key) {
+					return $setting->value;
+				}
+			}
 
-			return $all[$key]['value'];
+			return $default;
 
 		}
 
 		public static function getAll() {
 
-			\Cache::remember('settings',86400,function () use (&$all) {
+			\Cache::remember('setting',86400,function () use (&$all) {
 				$all = Setting::pluck('value','key')->all();
 				return Setting::pluck('value','key')->all();
 			});

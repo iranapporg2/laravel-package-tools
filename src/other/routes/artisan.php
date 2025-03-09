@@ -51,6 +51,12 @@
 				'details' => base64_decode($request->changelog),
 				'author' => $request->author,
 			]);
+			$version = 1;
+			if (Storage::disk('public')->exists('version.txt')) {
+				$version = Storage::disk('public')->get('version.txt');
+			}
+			++$version;
+			Storage::disk('public')->put('version.txt', $version);
 			exit('done');
 		})->withoutMiddleware('web');
 
