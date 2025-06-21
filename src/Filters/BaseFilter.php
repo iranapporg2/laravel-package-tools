@@ -56,7 +56,7 @@
 						if ($value == 'true' || $value == 'false')
 							$value = filter_var($value,FILTER_VALIDATE_BOOLEAN);
 
-						$this->query = call_user_func_array([$this, 'default'], ['key' => $filter,'value' => $value]);
+						$this->query = call_user_func_array([$this, 'default'], [$filter,$value]);
 
 					}
 				}
