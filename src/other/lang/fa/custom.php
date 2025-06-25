@@ -9,6 +9,7 @@
 		'gender.female' => 'خانم',
 		'gender.other' => 'سایر',
 
+		'error_slug' => 'فرمت نامک (:attribute) معتبر نیست. فقط حروف فارسی، انگلیسی، عدد و خط تیره بدون فاصله مجاز هستند.',
 		'state.new' => 'جدید',
 		'state.active' => 'فعال',
 		'state.inactive' => 'غیرفعال',
