@@ -246,10 +246,11 @@
 			return $total > 0 ? number_format(($number * 100) / $total, 0) : 0;
 		}
 
-		function sanitize($str,$remove_spaces = true) {
+		function sanitize($str,$remove_spaces = true,$remove_comma = false) {
 
 			$str = str_replace('ك','ک',$str);
 			$str = str_replace('ي','ی',$str);
+			if ($remove_comma) $str = str_replace(',','',$str);
 
 			$en_num = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 			$fa_num = array('٠', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
