@@ -33,22 +33,15 @@
 
 var form_ajax = false;
 var modal_ajax = false;
-var loaded_tag = false;
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (!loaded_tag) {
-        updateTags(document);
-        loaded_tag = true;
-    }
+    updateTags(document);
 });
 
 $(document).on('shown.bs.modal', '.modal', function (event) {
-    if (!loaded_tag) {
-        setTimeout(function () {
-            updateTags(event.target);
-        }, 300); // 100ms delay
-        loaded_tag = true;
-    }
+    setTimeout(function () {
+        updateTags(event.target);
+    }, 300); // 100ms delay
 });
 
 function updateTags(context) {
