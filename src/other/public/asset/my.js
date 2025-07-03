@@ -128,6 +128,8 @@ function updateTags(context) {
         let btn = $(this).find('[type=submit]');
         btn.text('در حال پردازش...');
 
+        let form = $(this);
+
         // Create a new FormData object to handle both files and other input fields
         let formData = new FormData($(this)[0]);
 
@@ -172,6 +174,20 @@ function updateTags(context) {
                         });
                     }
                 }
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = Math.round((evt.loaded / evt.total) * 100);
+                        if (typeof onProgress === 'function') {
+                            onProgress(percentComplete);
+                        }
+                    }
+                }, false);
+
+                return xhr;
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 form_ajax = false;
