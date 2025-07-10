@@ -118,6 +118,35 @@ function updateTags(context) {
         $($(this).data('form')).submit();
     });
 
+    $(context).delegate('a[data-ajax],button[data-ajax]','click',function (e) {
+        e.preventDefault();
+        let key = $(this).data('key');
+        let value = $(this).data('value');
+
+        fetch($(this).attr('href'), {
+            method: $(this).data('method'),
+            headers: {
+                'X-CSRF-TOKEN': $(this).data('token'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                key : key,
+                value: value
+            })
+        })
+        .then(response => {
+            if (typeof onAjaxRequest === 'function') {
+                onAjaxRequest(response);
+            } else {
+                if (response.status) {
+                    location.reload();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    });
+
     $(context).on('submit', 'form[data-ajax]', function (e) {
         e.preventDefault();
 
