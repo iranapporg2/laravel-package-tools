@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).on('shown.bs.modal', '.modal', function (event) {
     setTimeout(function () {
         updateTags(event.target);
-    }, 300); // 100ms delay
+    }, 50); // 100ms delay
 });
 
 function updateTags(context) {
