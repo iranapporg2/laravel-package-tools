@@ -46,7 +46,8 @@ $(document).on('shown.bs.modal', '.modal', function (event) {
 
 function updateTags(context) {
 
-    $("[data-modal]").click(function (e) {
+    $("body").delegate('[data-modal]','click', function (e) {
+
         e.preventDefault();
 
         if ($(this).data('modal-text') === undefined) {
