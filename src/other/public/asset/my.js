@@ -38,12 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTags(document);
 });
 
-$(document).on('shown.bs.modal', '.modal', function (event) {
-    setTimeout(function () {
-        updateTags(event.target);
-    }, 50); // 100ms delay
-});
-
 function updateTags(context) {
 
     $("body").delegate('[data-modal]','click', function (e) {
@@ -60,6 +54,7 @@ function updateTags(context) {
             $(`#${modal_id}`).find('.modal-body').html('در حال بارگزاری...');
             $(`#${modal_id}`).find('.modal-body').load($(this).attr('href'),function () {
                 modal_ajax = false;
+                updateTags(document);
             });
             $(`#${modal_id}`).modal('show');
         } else {
